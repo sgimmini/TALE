@@ -35,11 +35,9 @@ def process_files(directory: str):
     if not os.path.isdir(directory):
         raise HTTPException(status_code=400, detail="Invalid directory")
 
-    # TODO: Add file processing logic here    
-    output = []
-    for filename in os.listdir(directory):
-        with open(os.path.join(directory, filename), 'r', encoding="UTF-8") as f:  
-            output.append(f.read())
+    processor = PreProcessor()
+    output = processor.load_data(directory)
+
     return {"file_contents": output}
 
 
