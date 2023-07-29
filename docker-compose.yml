@@ -10,4 +10,4 @@ services:
       - ./consumer:/app/consumer
     ports:
       - "8000:8000"
-    command: ["uvicorn", "source.api.main:app", "--host", "0.0.0.0", "--port", "8000"]
+    command: ["poetry", "run", "uvicorn", "tale.api.main:app", "--host", "0.0.0.0", "--port", "8000"]

@@ -1,10 +1,7 @@
-import sys 
 from fastapi import FastAPI, HTTPException
 import uvicorn
-import pydantic 
-sys.path.append("..")
-from .. import pre_processor
-import os 
+from tale.pre_processor import PreProcessor
+import os
 
 app = FastAPI()
 
