@@ -44,10 +44,27 @@ class PostProcessor:
         file.close()
         return
     
-    def process(self):
+    def process(self, path):
         """
         Processes the content by generating a html and writing it into a file.
         """
         html = self.generateHtml()
-        self.writeHtml('output.html', html)
+        self.writeHtml(path + 'output.html', html)
         return
+
+
+# create a main function in order to test the class
+def __main__():
+    # create a content object
+    content = Content('', [''], [''])
+    content.loadFile('source//data//dummy//test1.json')
+
+    # create a post processor object
+    postProcessor = PostProcessor(content)
+    # process the content
+    postProcessor.process('source//data//output//')
+    return
+
+# call the main function
+if __name__ == '__main__':
+    __main__()

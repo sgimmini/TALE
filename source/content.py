@@ -35,7 +35,8 @@ class Content:
             path (str) : The path to the json file
         """
         # load the variables of this class from a json file
-        fileContent = json.load(open(path, 'r'))
+        jsonstring = open(path, 'r').read()
+        fileContent = json.loads(jsonstring, strict=False)
         self.title = fileContent['title']
         self.text = fileContent['text']
         self.images = fileContent['images']
