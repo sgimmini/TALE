@@ -1,6 +1,10 @@
+import sys 
 from fastapi import FastAPI, HTTPException
 import uvicorn
 import pydantic 
+sys.path.append("..")
+from .. import pre_processor
+import os 
 
 app = FastAPI()
 
@@ -25,6 +29,22 @@ def calculate_sum(data: dict) -> None:
     except ValueError:
         raise HTTPException(status_code=400, detail="Invalid data values")
     return {"sum": sum(values)}
+
+@app.get("/consume_directory")
+def process_files(directory: str):
+    """Endpoint to consume a directory and return the contents of the files"""
+    if not isinstance(directory, str):
+        raise HTTPException(status_code=400, detail="Invalid directory format")
+    if not os.path.isdir(directory):
+        raise HTTPException(status_code=400, detail="Invalid directory")
+
+    # TODO: Add file processing logic here    
+    output = []
+    for filename in os.listdir(directory):
+        with open(os.path.join(directory, filename), 'r', encoding="UTF-8") as f:  
+            output.append(f.read())
+    return {"file_contents": output}
+
 
 def main():
     """
