@@ -3,40 +3,47 @@ Pre processing module for preparing data for models pipeline.
 
 """
 
+from pydantic import BaseModel
 
-def format(full_text: str) -> str:
+class PreProcessor(BaseModel):
     """
-    Format text for models pipeline.
+    Pre processing class for preparing data for models pipeline.
 
-    :param full_text: text to be formatted
-    :return: formatted text
     """
-    pass
 
-def merge_files(files: list) -> str:
-    """
-    Merge list of files into one string.
+    def format(self, full_text: str) -> str:
+        """
+        Format text for models pipeline.
 
-    :param files: list of files
-    :return: merged string; full text
-    """
-    pass
+        :param full_text: text to be formatted
+        :return: formatted text
+        """
+        raise NotImplementedError
 
-def parse_file(file: str) -> str:
-    """
-    Parse file into string.
+    def merge_files(self, files: list) -> str:
+        """
+        Merge list of files into one string.
 
-    :param file: path to file to be parsed
-    :return: parsed string; full text
-    """
-    pass
+        :param files: list of files
+        :return: merged string; full text
+        """
+        raise NotImplementedError
+
+    def parse_textfile(self, file: str) -> str:
+        """
+        Parse file into string.
+
+        :param file: path to file to be parsed
+        :return: parsed string; full text
+        """
+        raise NotImplementedError
 
 
-def load_files(directory: str) -> list:
-    """
-    Load files from directory.
+    def load_files(self, directory: str) -> list:
+        """
+        Load files from directory.
 
-    :param directory: path to directory
-    :return: list of files
-    """
-    pass
+        :param directory: path to directory
+        :return: list of files
+        """
+        raise NotImplementedError

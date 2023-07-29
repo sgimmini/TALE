@@ -12,6 +12,9 @@ conda create -n tale python==3.11
 # Activate environment
 conda activate tale
 
+# Install the requirered Python packages
+pip install -r requirements.txt
+
 
 
 ## Install VS Code
@@ -26,4 +29,34 @@ Draw.io Integration
 Python
 Pylint
 autopep8
+Mypy Type Checker
+
+# Set conda environment
+open a python file (e.g. source/content.py)
+click on bottom right tray, right of python
+select tale conda environment
+
+
+## Use git
+
+# Start a new branch
+checkout to... >dev
+pull
+branch > create branch from > dev  
+    feature/[your feature name]
+
+# Pull request
+Commit your changes
+Go to github.com > select your branch > Create pull request
+Select destination of pull request to dev
+Requets pull request
+
+# Some else does code review
+On github.com
+Select pull requests > click on one of the pull requests
+Files changed > Do your code review
+
+# Delete branch
+In VS Code
+Branch > Delete branch ... > feature/[your feature name]
 
