@@ -1,4 +1,4 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 import uvicorn
 
 app = FastAPI()
@@ -12,6 +12,18 @@ def homepage():
 def read_():
     """Returns an ok statement if server is running"""
     return {"200": "OK"}
+
+@app.post("/calculate_sum")
+def calculate_sum(data: dict):‚
+    """Endpoint to reciewve data and return the sum"""
+    if not isinstance(data, dict):
+        raise HTTPException(status_code=400, de‚tail="Invalid JSON data‚ format")
+    try:
+        values = [float(value) for value in data.values()]
+    except ValueError:
+        raise HTTPException(status_code=400, detail="Invalid data values")
+    return {"sum": sum(values)}
+
 
 if __name__ == '__main__':
     """Main Method"""
