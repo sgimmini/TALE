@@ -1,4 +1,5 @@
 from content import Content
+from bs4 import BeautifulSoup
 
 class PostProcessor:
     """
@@ -24,24 +25,46 @@ class PostProcessor:
         Returns:
             html (str) : The html string
         """
-        html = '<!DOCTYPE html>\n<html>\n<head>\n<title>' + self.content.title + '</title>\n</head>\n<body>\n'
+        # read html structure from html file
+        dummy_html = open('source//data//dummy//website//dummy.html', 'r').read()
+        # read corresponding css file
+        dummy_css = open('source//data//dummy//website//dummy.css', 'r').read()
+
+        # create a beautiful soup object
+        soup = BeautifulSoup(dummy_html, 'html.parser')
+
+        # set the title
+        soup.title.string = self.content.title
+
+        # add css to the html file
+        head = soup.find('head')
+        head.append(soup.new_tag('style', type='text/css'))
+        head.style.append(dummy_css)
+
+        # set the first header
+        new_h1 = soup.new_tag('h1')
+        new_h1['class'] = 'fire'
+        new_h1.string = self.content.title
+        soup.find('div', {'class': 'content'}).append(new_h1)
+
+        # iterate over the texts, break them up after  two newlines in a row and add them as paragraphs to the div with class 'foreground' 
         for text in self.content.text:
-            html += '<p>' + text + '</p>\n'
-        for image in self.content.images:
-            html += '<img src="' + image + '">\n'
-        html += '</body>\n</html>'
-        return html
-    
+            for paragraph in text.split('\n\n'):
+                new_tag = soup.new_tag('p')
+                new_tag.string = paragraph
+                soup.find('div', {'class': 'foreground'}).append(new_tag)
+
+        return soup.prettify()
+            
     def writeHtml(self, path, html):
         """
-        Writes the html string to a file.
+        Writes the html string into a file.
         Attributes:
-            path (str) : The path to the html file
-            html (str) : The html string to be written
+            path (str) : The path to the file
+            html (str) : The html string
         """
-        file = open(path, 'w')
-        file.write(html)
-        file.close()
+        # write the html string into a file
+        open(path, 'w', encoding='utf-8').write(html)
         return
     
     def process(self, path):
