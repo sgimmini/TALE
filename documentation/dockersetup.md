@@ -18,6 +18,12 @@ To run the container, run the following command in the root directory of the pro
 docker compose up -d
 ```
 
+## Run and Build
+To build the image and run the container, run the following command in the root directory of the project:
+```
+docker compose up -d --build
+```
+
 ## Stop
 To stop the container, run the following command in the root directory of the project:
 ```
