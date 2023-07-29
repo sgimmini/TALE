@@ -50,9 +50,12 @@ class PostProcessor:
         # iterate over the texts, break them up after  two newlines in a row and add them as paragraphs to the div with class 'foreground' 
         for text in self.content.text:
             for paragraph in text.split('\n\n'):
+                new_div = soup.new_tag('div')
                 new_tag = soup.new_tag('p')
                 new_tag.string = paragraph
-                soup.find('div', {'class': 'foreground'}).append(new_tag)
+                new_div.append(new_tag)
+                new_div['class'] = 'paragraph'
+                soup.find('div', {'class': 'foreground'}).append(new_div)
 
         return soup.prettify()
             

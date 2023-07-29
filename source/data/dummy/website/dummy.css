@@ -141,3 +141,8 @@ body {
 	background-blend-mode: difference, normal;
 	animation: sliding 5s linear infinite;
 }
+
+
+.paragraph{
+    background-image: -moz-repeating-radial-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.2) 1px, transparent 1px, transparent 100%), -moz-repeating-radial-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.2) 1px, transparent 1px, transparent 100%);
+}
