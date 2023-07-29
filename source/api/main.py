@@ -14,10 +14,10 @@ def read_():
     return {"200": "OK"}
 
 @app.post("/calculate_sum")
-def calculate_sum(data: dict):‚
+def calculate_sum(data: dict):
     """Endpoint to reciewve data and return the sum"""
     if not isinstance(data, dict):
-        raise HTTPException(status_code=400, de‚tail="Invalid JSON data‚ format")
+        raise HTTPException(status_code=400, detail="Invalid JSON data‚ format")
     try:
         values = [float(value) for value in data.values()]
     except ValueError:
