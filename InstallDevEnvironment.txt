@@ -1,0 +1,29 @@
+## Install Python
+
+# Install miniconda (Download from website)
+
+
+# Update conda
+conda update -n base -c defaults conda
+
+# Create repository
+conda create -n tale python==3.11
+
+# Activate environment
+conda activate tale
+
+
+
+## Install VS Code
+
+# Download Visual Studio Code (ask Google how to do)
+
+# Update VS Code
+Help > Check for Updates...
+
+# Install the following extensions
+Draw.io Integration
+Python
+Pylint
+autopep8
+
