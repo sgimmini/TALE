@@ -26,6 +26,11 @@ def calculate_sum(data: dict) -> None:
         raise HTTPException(status_code=400, detail="Invalid data values")
     return {"sum": sum(values)}
 
-if __name__ == '__main__':
-    """Main Method"""
+def main():
+    """
+    Main Method
+    """
     uvicorn.run(app=app, host='127.0.0.1', port=8000)
+
+if __name__ == '__main__':
+    main()
