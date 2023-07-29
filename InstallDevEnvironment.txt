@@ -40,10 +40,11 @@ select tale conda environment
 ## Use git
 
 # Start a new branch
-checkout to... >dev
+checkout to... > dev
 pull
 branch > create branch from > dev  
     feature/[your feature name]
+Publish branch
 
 # Pull request
 Commit your changes
