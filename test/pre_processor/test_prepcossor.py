@@ -1,7 +1,7 @@
 import unittest
 import sys
 sys.path.append('../..')
-from source.pre_processing.pre_processor import PreProcessor
+from source.pre_processor import PreProcessor
 
 class TestPreProcessor(unittest.TestCase):
     """Testing the PreProcessor class"""
