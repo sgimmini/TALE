@@ -12,10 +12,21 @@ conda create -n tale python==3.11
 # Activate environment
 conda activate tale
 
+# Installing poetry
+pip install poetry==1.5.1
+
 # Install the requirered Python packages
-pip install -r requirements.txt
+poetry install 
 
+# Adding new packages
 
+poetry add <package==X.X.X>
+or 
+manually edit the pyproject.toml file
+
+# After adding new packages update the .lock file
+
+poetry update
 
 ## Install VS Code
 
