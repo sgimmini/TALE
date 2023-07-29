@@ -1,7 +1,9 @@
 from fastapi import FastAPI, HTTPException
 import uvicorn
+import pydantic 
 
 app = FastAPI()
+
 
 @app.get("/")
 def homepage():
@@ -23,7 +25,6 @@ def calculate_sum(data: dict):
     except ValueError:
         raise HTTPException(status_code=400, detail="Invalid data values")
     return {"sum": sum(values)}
-
 
 if __name__ == '__main__':
     """Main Method"""
