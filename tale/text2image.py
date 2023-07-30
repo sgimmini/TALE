@@ -10,8 +10,9 @@ class Text2Image:
     def __init__(self) -> None:
         device = "cuda:0" if torch.cuda.is_available() else "cpu"
         self.model = DiffusionPipeline.from_pretrained("runwayml/stable-diffusion-v1-5", torch_dtype=torch.float32).to(device)
+        self.model.safety_checker = lambda images, **kwargs: (images, False)
 
-    def text2image(self, prompt, num_steps=3, resolution=80):
+    def text2image(self, prompt, num_steps=5, resolution=48):
         """
         This function takes a prompt as input and returns an image as output.
         :param prompt: a string of text
