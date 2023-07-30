@@ -1,23 +1,35 @@
-from transformers import AutoTokenizer, AutoModel
+import os 
+import openai
+import json
+import tale.pre_processor as pre_processor
 
 
-with open("resource/processed-text.txt", "r", encoding="utf-8") as f:
-    processed_text = f.read()
+def main():
+    secret_location = os.path.join("..", "secret.json")
 
-# Based on https://github.com/rohan-paul/MachineLearning-DeepLearning-Code-for-my-YouTube-Channel/blob/master/NLP/FinBERT_Long_Text_Part_2.ipynb
-tokenizer = AutoTokenizer.from_pretrained("facebook/bart-large-cnn")
-tokens = tokenizer.encode_plus(processed_text, add_special_tokens=True, return_tensors="pt")
-chunked_input_ids = tokens["input_ids"][0].split(tokenizer.model_max_length )
-chunked_attn_mask = tokens["attention_mask"][0].split(tokenizer.model_max_length )
-print(len(chunked_input_ids), chunked_input_ids[0].shape, tokenizer.model_max_length )
+    with open(secret_location, encoding="UTF-8") as json_file:
+        openai.api_key = json.load(json_file)["api_key"]
 
-# REFACTOR: Idee zum schön machen Padde die sequence lang genug damit sie einfach mit nem reshape gesplittet werden kann
-# TODO Padde last sequence and make it into dict so modell can process it
+    processor = pre_processor.PreProcessor() 
+    notes = processor.parse_textfolder(os.path.join("..", "consumer/the_sprawl"))
 
-model = AutoModel.from_pretrained("facebook/bart-large-cnn")
-# TODO model forward and decode tokens into text
+    messages = [
+        {"role": "system", "content": "Du bist ein leistungsfähiges Modell, das Notizen von verschiedenen Personen zusammenfassen und verschmelzen möchte. Du wirst Überschneidungen finden und herausfinden, wo fehlende Notizen sich einander ergänzen. Die Zusammenfassung soll mindestens 2000 Worte umfassen. Die Zusammenfassung ist in Stichpunkten."},
+        {"role": "user", "content": f"{notes}"}
+    ]
+
+    response = openai.ChatCompletion.create(
+        model="gpt-3.5-turbo",
+        messages=messages,
+        temperature=0,
+        max_tokens=4096
+    )
+
+    # write response to file "response.json"
+    with open("response.json", "w", encoding="UTF-8") as json_file:
+        json.dump(response, json_file, indent=4)
 
 
-# Legacy Code
-#summarizer = pipeline("summarization", model="facebook/bart-large-cnn")
-#print(summarizer(processed_text, max_length=130, min_length=30, do_sample=False))
+
+if __name__ == "__main__":
+    main()

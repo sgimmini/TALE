@@ -15,8 +15,6 @@ conda activate tale
 # Install the requirered Python packages
 pip install -r requirements.txt
 
-
-
 ## Install VS Code
 
 # Download Visual Studio Code (ask Google how to do)
