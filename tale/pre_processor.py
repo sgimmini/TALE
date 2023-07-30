@@ -12,24 +12,20 @@ class PreProcessor(BaseModel):
 
     """
 
-    def format(self, full_text: str) -> str:
+    def load_files(self, directory: str) -> list[str]:
         """
-        Format text for models pipeline.
+        Load files from directory.
 
-        :param full_text: text to be formatted
-        :return: formatted text
+        :param directory: path to directory
+        :return: list of files
         """
-        raise NotImplementedError
+        files = os.listdir(directory)
+        txt_files  = []
+        for filename in files:
+            if filename.endswith('.txt'):
+                txt_files.append(directory+ '/' + filename)
 
-    def merge_files(self, files: list[str]) -> str:
-        """
-        Merge list of files into one string.
-
-        :param files: list of files
-        :return: merged string; full text
-        """
-        raise NotImplementedError
-
+        return txt_files
 
     def parse_textfile(self, filepath: str) -> str:
         """
@@ -60,37 +56,12 @@ class PreProcessor(BaseModel):
 
         return full_text
 
-
-
-    def parse_textfolder(self, filepath: str) -> str:
+    def load_data(self, filepath: str) -> str:
         """
-        Parse file into string.
-
-        :param file: path to folder to be parsed
-        :return: parsed string; full text of all files concatinated
+        Loads txt's from filepath and returns a string of all the text.
         """
         files = self.load_files(filepath)
-        return self.concatinate_files(files=files)
-    
-
-    def load_files(self, directory: str) -> list[str]:
-        """
-        Load files from directory.
-
-        :param directory: path to directory
-        :return: list of files
-        """
-        files = os.listdir(directory)
-        txt_files  = []
-        for filename in files:
-            if filename.endswith('.txt'):
-                txt_files.append(directory+ '/' + filename)
-
-        return txt_files
-    def concatinate_files(self, files: list[str]) -> str:
-        """Concatinates the input of a list of filepaths"""
-
         merged_text = ''
-        for file in files:
-            merged_text = merged_text + self.parse_textfile(file)
+        for f in files:
+            merged_text = merged_text + self.parse_textfile(f)
         return merged_text
