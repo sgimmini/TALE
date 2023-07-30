@@ -1,0 +1,53 @@
+{"data":"Dir stehen die Zusammenfassungen eines Stift-und-Papier-Rollenspiels zur Verfügung, ein Gewebe aus Geschichten, das darauf wartet, verwandelt zu werden.
+Die Aufgabe verlangt Feingefühl - teile die Eingabe in Abschnitte von ungefähr 500 Wörtern, wie Schritte, die nach und nach enthüllt werden.
+In jedem Fragment suche den heiligen Satz, der die Essenz der Erzählung enthält. Dieser Satz wird dein Leitstern sein und dich zum Herzen des Bildes führen. Probiere die Essenz eines Abschnittes zu erfassen.
+Schreibe eine Prompt für stable diffusion die ein Bild generiert welches die Essenz des Abschnittes zusammenfasst. Die Zusammenfassung sollte sich nur auf einen Teil des Absatzes beziehen und diesen atmosphärisch untermalen.
+
+Bitte schreib in deinen Output nur noch die image prompt wie in diesem Beispiel:
+
+Die Prompt soll ungefähr 25 Wörter haben und muss auf englisch sein.
+Die Prompt soll ungefähr 25 Wörter haben und muss auf englisch sein.
+In der Prompt soll keine Zusammenfassung der Scene enthalten sein. Die Prompt soll nur und wirklich nur den Text enthalten der Input für das Stable Diffusion Model ist.
+
+Beginning example output'''
+
+{
+'fraction1': 'This is an example prompt for the first 500 words into stable diffusion',
+'fraction2: 'This is an example prompt for the second 500 words into stable diffusion',
+'fraction3: 'This is an example prompt for the third 500 words into stable diffusion',
+'fraction4': 'This is an example prompt for the fourth  500 words into stable diffusion
+}
+''' End example output
+
+Only output the part in {} once and stick to the format!
+[Ende des Prompts]
+ --here add the summary--
+
+ ---run again with only the prompt--
+
+Dir stehen die Zusammenfassungen eines Stift-und-Papier-Rollenspiels zur Verfügung, ein Gewebe aus Geschichten, das darauf wartet, verwandelt zu werden.
+Die Aufgabe verlangt Feingefühl - teile die Eingabe in Abschnitte von ungefähr 500 Wörtern, wie Schritte, die nach und nach enthüllt werden.
+In jedem Fragment suche den heiligen Satz, der die Essenz der Erzählung enthält. Dieser Satz wird dein Leitstern sein und dich zum Herzen des Bildes führen. Probiere die Essenz eines Abschnittes zu erfassen.
+Schreibe eine Prompt für stable diffusion die ein Bild generiert welches die Essenz des Abschnittes zusammenfasst. Die Zusammenfassung sollte sich nur auf einen Teil des Absatzes beziehen und diesen atmosphärisch untermalen.
+
+Bitte schreib in deinen Output nur noch die image prompt wie in diesem Beispiel:
+
+Die Prompt soll ungefähr 25 Wörter haben und muss auf englisch sein.
+Die Prompt soll ungefähr 25 Wörter haben und muss auf englisch sein.
+In der Prompt soll keine Zusammenfassung der Scene enthalten sein. Die Prompt soll nur und wirklich nur den Text enthalten der Input für das Stable Diffusion Model ist.
+
+Beginning example output'''
+
+{
+'fraction1': 'This is an example prompt for the first 500 words into stable diffusion',
+'fraction2: 'This is an example prompt for the second 500 words into stable diffusion',
+'fraction3: 'This is an example prompt for the third 500 words into stable diffusion',
+'fraction4': 'This is an example prompt for the fourth  500 words into stable diffusion
+}
+''' End example output
+
+Only output the part in {} once and stick to the format!
+
+[Ende des Prompts]
+
+"}
