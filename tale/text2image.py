@@ -10,18 +10,16 @@ class Text2Image:
     def __init__(self) -> None:
         device = "cuda:0" if torch.cuda.is_available() else "cpu"
         self.model = DiffusionPipeline.from_pretrained("runwayml/stable-diffusion-v1-5", torch_dtype=torch.float32).to(device)
-        self.model.safety_checker = lambda images, **kwargs: (images, False)
+        self.model.safety_checker =  None
 
-    def text2image(self, prompt, num_steps=5, resolution=48):
+    def text2image(self, prompt, num_steps=5, resolution=256):
         """
         This function takes a prompt as input and returns an image as output.
         :param prompt: a string of text
         :return: an image
         """
         generator = torch.Generator().manual_seed(42)
-        height = 3 * resolution
-        width = 4 * resolution
-        generated_image = self.model(prompt, height=height, width=width, num_inference_steps=num_steps, generator=generator).images[0]
+        generated_image = self.model(prompt, height=resolution, width=resolution, num_inference_steps=num_steps, generator=generator).images[0]
         return generated_image
 
 
@@ -41,7 +39,7 @@ if __name__ == "__main__":
     # get the prompt
     TEST_PROMPT = "A dog on a pillow"
     # generate the image
-    test_image = text2image.text2image(TEST_PROMPT)
+    test_image = text2image.text2image(TEST_PROMPT, 5, 256)
     # save the image
     text2image.save_image(test_image, "test_image.png")
     # show the test_image
