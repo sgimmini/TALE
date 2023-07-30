@@ -4,6 +4,9 @@ from PIL import Image
 
 # set cuda DEVICE
 DEVICE = "cuda:0" if torch.cuda.is_available() else "cpu"
+NUM_STEPS = 3
+RESOLUTION = 80
+
 
 def text2image(prompt):
     """
@@ -11,9 +14,11 @@ def text2image(prompt):
     :param prompt: a string of text
     :return: an image
     """
-    pipe = DiffusionPipeline.from_pretrained("stabilityai/stable-diffusion-xl-base-1.0", torch_dtype=torch.float16).to(DEVICE)
-    generator = pipe.model.generator
-    image = pipe(prompt, height= 480, width= 480, num_inference_steps= 2, generator=generator).images[0]
+    pipe = DiffusionPipeline.from_pretrained("runwayml/stable-diffusion-v1-5", torch_dtype=torch.float32).to(DEVICE)
+    generator = torch.Generator().manual_seed(42)
+    height = 3 * RESOLUTION
+    width = 4 * RESOLUTION
+    image = pipe(prompt, height=height, width=width, num_inference_steps= NUM_STEPS, generator=generator).images[0]
     return image
 
 
