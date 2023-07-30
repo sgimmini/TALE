@@ -1,6 +1,8 @@
 from fastapi import FastAPI, HTTPException
 import uvicorn
-from tale.pre_processor import PreProcessor
+import sys
+sys.path.append('..')
+from ..pre_processor import PreProcessor
 import os
 
 app = FastAPI()
