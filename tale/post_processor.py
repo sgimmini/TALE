@@ -26,9 +26,9 @@ class PostProcessor:
             html (str) : The html string
         """
         # read html structure from html file
-        dummy_html = open('source//data//dummy//website//dummy.html', 'r').read()
+        dummy_html = open('.//data//dummy//website//dummy.html', 'r').read()
         # read corresponding css file
-        dummy_css = open('source//data//dummy//website//dummy.css', 'r').read()
+        dummy_css = open('.//data//dummy//website//dummy.css', 'r').read()
 
         # create a beautiful soup object
         soup = BeautifulSoup(dummy_html, 'html.parser')
@@ -83,12 +83,12 @@ class PostProcessor:
 def __main__():
     # create a content object
     content = Content('', [''], [''])
-    content.loadFile('source//data//dummy//test1.json')
+    content.loadFile('.//tale//dummy//test1.json')
 
     # create a post processor object
     postProcessor = PostProcessor(content)
     # process the content
-    postProcessor.process('source//data//output//')
+    postProcessor.process('.//data//output//')
     return
 
 # call the main function
