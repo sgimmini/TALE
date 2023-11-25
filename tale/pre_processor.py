@@ -5,6 +5,7 @@ Pre processing module for preparing data for models pipeline.
 
 import os
 from pydantic import BaseModel
+import json
 
 class PreProcessor(BaseModel):
     """
@@ -65,3 +66,16 @@ class PreProcessor(BaseModel):
         for f in files:
             merged_text = merged_text + self.parse_textfile(f)
         return merged_text
+
+    def load_json(self, filepath: str) -> dict:
+        """
+        Loads json from filepath.
+        """
+        if not filepath.endswith(".json"):
+            raise ValueError("File must be a .json file.")
+
+       # load json file
+        with open(filepath, 'r', encoding="UTF-8") as json_file:
+            output = json.load(json_file)
+
+        return output

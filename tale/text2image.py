@@ -1,5 +1,6 @@
-from diffusers import DiffusionPipeline
+from diffusers import DiffusionPipeline, DDIMScheduler, KDPM2AncestralDiscreteScheduler
 import torch
+import pre_processor
 
 
 class Text2Image:
@@ -8,9 +9,11 @@ class Text2Image:
     """
 
     def __init__(self) -> None:
-        device = "cuda:0" if torch.cuda.is_available() else "cpu"
-        self.model = DiffusionPipeline.from_pretrained("runwayml/stable-diffusion-v1-5", torch_dtype=torch.float32).to(device)
-        self.model.safety_checker =  None
+        device = "cuda"
+        self.pipe = DiffusionPipeline.from_pretrained("runwayml/stable-diffusion-v1-5", torch_dtype=torch.float16).to(device)
+        self.pipe.safety_checker =  None
+        self.pipe.scheduler = KDPM2AncestralDiscreteScheduler.from_config(self.pipe.scheduler.config, rescale_betas_zero_snr=True, timestep_spacing="trailing")
+
 
     def text2image(self, prompt, num_steps=5, resolution=256):
         """
@@ -18,8 +21,9 @@ class Text2Image:
         :param prompt: a string of text
         :return: an image
         """
+        
         generator = torch.Generator().manual_seed(42)
-        generated_image = self.model(prompt, height=resolution, width=resolution, num_inference_steps=num_steps, generator=generator).images[0]
+        generated_image = self.pipe(prompt, height=resolution, width=resolution, num_inference_steps=num_steps, generator=generator).images[0]
         return generated_image
 
 
@@ -38,9 +42,19 @@ if __name__ == "__main__":
     text2image = Text2Image()
     # get the prompt
     TEST_PROMPT = "A dog on a pillow"
-    # generate the image
-    test_image = text2image.text2image(TEST_PROMPT, 5, 256)
-    # save the image
-    text2image.save_image(test_image, "test_image.png")
-    # show the test_image
-    test_image.show()
+
+    # open a json file and load the content
+    processor = pre_processor.PreProcessor()
+    
+    # load the content
+    content = processor.load_json("tale//dummy//test2.json")
+    
+    # iterate over content, take the value and use it as prompt
+    for key, value in content.items():
+        TEST_PROMPT = value
+        # generate the image
+        test_image = text2image.text2image(TEST_PROMPT, 30, 1024)
+        # save the image
+        text2image.save_image(test_image, "test//output//" + key + ".png")
+        # show the test_image
+        # test_image.show()
