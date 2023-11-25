@@ -2,7 +2,15 @@ from diffusers import DiffusionPipeline, DDIMScheduler, KDPM2AncestralDiscreteSc
 import torch
 import pre_processor
 from openai import OpenAI
-client = OpenAI()
+import base64
+import requests
+from PIL import Image
+
+# read api key from file secret.txt
+with open("secret.txt", "r") as file:
+    api_key = file.read()
+client = OpenAI(api_key=api_key)
+
 
 class Text2Image:
     """
@@ -37,25 +45,57 @@ class Text2Image:
         # save the image
         image.save(path)
         return
+    
+    def text2image_openai(self, prompt, resolution="512x512"):
+        """
+        This function takes a prompt as input and returns an image as output.
+        :param prompt: a string of text
+        :return: an image
+        """
+        response = client.images.generate(
+            model="dall-e-3",
+            prompt=prompt,
+            size=resolution,
+            quality="standard",
+            n=1,
+        )
+        return response.data[0].url
+    
+    def save_image_openai(self, image, path):
+        """
+        This function takes an image as input and saves it to a file.
+        :param image: an image
+        :return: None
+        """
+        # get response
+        response = requests.get(image , stream=True)
+        
+        # save response as png
+        with open(path, 'wb') as file:
+            file.write(response.content)
+            
+        # save the image
+        # img = Image.open(response.raw)
+        
+        # save the image
+        
 
 if __name__ == "__main__":
     # create an instance of the class
     text2image = Text2Image()
-    # get the prompt
-    TEST_PROMPT = "A dog on a pillow"
-
+    
     # open a json file and load the content
     processor = pre_processor.PreProcessor()
     
     # load the content
-    content = processor.load_json("tale//dummy//test2.json")
+    content = processor.load_json("data//dummy//input//gpt_created_prompts.json")
     
     # iterate over content, take the value and use it as prompt
     for key, value in content.items():
         TEST_PROMPT = value
         # generate the image
-        test_image = text2image.text2image(TEST_PROMPT, 30, 1024)
+        # test_image = text2image.text2image(TEST_PROMPT, 30, 1024)
+        test_image = text2image.text2image_openai(TEST_PROMPT, "1024x1024")
+
         # save the image
-        text2image.save_image(test_image, "test//output//" + key + ".png")
-        # show the test_image
-        # test_image.show()
+        text2image.save_image_openai(test_image, "data//dummy//output//" + key + ".png")
