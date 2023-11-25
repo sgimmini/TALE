@@ -1,5 +1,7 @@
 from content import Content
 from bs4 import BeautifulSoup
+import os
+
 
 class PostProcessor:
     """
@@ -18,48 +20,6 @@ class PostProcessor:
         self.content = content
         return
 
-
-    def generateHtml(self):
-        """
-        Generates a html string from the content.
-        Returns:
-            html (str) : The html string
-        """
-        # read html structure from html file
-        dummy_html = open('.//data//dummy//website//dummy.html', 'r').read()
-        # read corresponding css file
-        dummy_css = open('.//data//dummy//website//dummy.css', 'r').read()
-
-        # create a beautiful soup object
-        soup = BeautifulSoup(dummy_html, 'html.parser')
-
-        # set the title
-        soup.title.string = self.content.title
-
-        # add css to the html file
-        head = soup.find('head')
-        head.append(soup.new_tag('style', type='text/css'))
-        head.style.append(dummy_css)
-
-        # set the first header
-        new_h1 = soup.new_tag('h1')
-        new_h1['class'] = 'fire'
-        new_h1.string = self.content.title
-        soup.find('div', {'class': 'content'}).append(new_h1)
-
-        # iterate over the texts, break them up after  two newlines in a row and add them as paragraphs to the div with class 'foreground' 
-        for text in self.content.text:
-            for paragraph in text.split('\n\n'):
-                new_div = soup.new_tag('div')
-                new_tag = soup.new_tag('p')
-                new_tag.string = paragraph
-                new_div.append(new_tag)
-                new_div['class'] = 'paragraph'
-                soup.find('div', {'class': 'foreground'}).append(new_div)
-
-        return soup.prettify()
-            
-            
             
     def generateHtml_images_only(self):
         """
@@ -88,14 +48,24 @@ class PostProcessor:
         new_h1['class'] = 'fire'
         new_h1.string = self.content.title
         soup.find('div', {'class': 'content'}).append(new_h1)
-
-        # iterate over the texts, break them up after  two newlines in a row and add them as paragraphs to the div with class 'foreground' 
-        for image in self.content.images:
-            new_div = soup.new_tag('div')
-            new_tag = soup.new_tag('img', src=image)
-            new_div.append(new_tag)
-            new_div['class'] = 'gallery'
-            soup.find('div', {'class': 'foreground'}).append(new_div)
+        
+        # open path to images
+        path = 'C://Users//fraul//Documents//GitHub//TALE//data//dummy//output'
+        
+        # iterate over all files in the directory
+        for file in os.listdir(path):
+            # if the file is an image
+            if file.endswith('.png'):
+                # create a new div
+                new_div = soup.new_tag('div')
+                # create a new image tag
+                new_tag = soup.new_tag('img', src=path + "//" +file)
+                # append the image tag to the div
+                new_div.append(new_tag)
+                # set the class of the div
+                new_div['class'] = 'gallery'
+                # append the div to the foreground
+                soup.find('div', {'class': 'foreground'}).append(new_div)
 
         return soup.prettify()
     
@@ -123,12 +93,10 @@ class PostProcessor:
 def __main__():
     # create a content object
     content = Content('', [''], [''])
-    content.loadFile('.//tale//dummy//test1.json')
-
     # create a post processor object
     postProcessor = PostProcessor(content)
     # process the content
-    postProcessor.process('.//data//output//')
+    postProcessor.process('')
     return
 
 # call the main function
