@@ -59,6 +59,46 @@ class PostProcessor:
 
         return soup.prettify()
             
+            
+            
+    def generateHtml_images_only(self):
+        """
+        Generates a html string from the content.
+        Returns:
+            html (str) : The html string
+        """
+        # read html structure from html file
+        dummy_html = open('.//data//dummy//website//dummy.html', 'r').read()
+        # read corresponding css file
+        dummy_css = open('.//data//dummy//website//dummy.css', 'r').read()
+
+        # create a beautiful soup object
+        soup = BeautifulSoup(dummy_html, 'html.parser')
+
+        # set the title
+        soup.title.string = self.content.title
+
+        # add css to the html file
+        head = soup.find('head')
+        head.append(soup.new_tag('style', type='text/css'))
+        head.style.append(dummy_css)
+
+        # set the first header
+        new_h1 = soup.new_tag('h1')
+        new_h1['class'] = 'fire'
+        new_h1.string = self.content.title
+        soup.find('div', {'class': 'content'}).append(new_h1)
+
+        # iterate over the texts, break them up after  two newlines in a row and add them as paragraphs to the div with class 'foreground' 
+        for image in self.content.images:
+            new_div = soup.new_tag('div')
+            new_tag = soup.new_tag('img', src=image)
+            new_div.append(new_tag)
+            new_div['class'] = 'gallery'
+            soup.find('div', {'class': 'foreground'}).append(new_div)
+
+        return soup.prettify()
+    
     def writeHtml(self, path, html):
         """
         Writes the html string into a file.
@@ -74,7 +114,7 @@ class PostProcessor:
         """
         Processes the content by generating a html and writing it into a file.
         """
-        html = self.generateHtml()
+        html = self.generateHtml_images_only()
         self.writeHtml(path + 'output.html', html)
         return
 
