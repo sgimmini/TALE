@@ -1,7 +1,8 @@
 from diffusers import DiffusionPipeline, DDIMScheduler, KDPM2AncestralDiscreteScheduler
 import torch
 import pre_processor
-
+from openai import OpenAI
+client = OpenAI()
 
 class Text2Image:
     """
