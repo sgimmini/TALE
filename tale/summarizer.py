@@ -2,7 +2,7 @@ import os
 import openai
 from openai import OpenAI
 from pre_processor import PreProcessor
-
+from tqdm import tqdm
 
 class Summarizer:
     """This class contains functions to summarize notes into prompts"""
@@ -108,16 +108,43 @@ class Summarizer:
              ]
         )
         return response.choices[0].message.content
+    
+    
+    def cleanPrompt(self, prompt):
+        """This function takes a string as input and returns a string as output"""
+        # load context.json
+        PreProcessor = PreProcessor()
+        context = PreProcessor.loadJson("data//dummy//input//context.json")
         
+        # clean the prompt by substituting names which are keys in context.json with their values with tqdm loading bar
+        for key in tqdm(context):
+            prompt = prompt.replace(key, context[key])
+        
+        return prompt
         
         
 
-    def getPropmtsFromNotes(self, notes):
+    def getPropmtsFromNotes(self, path):
         """This function takes a path as input and returns a list of prompts as output"""
         # create a list of prompts
         prompts = []
         
-        return prompts
+        print("Reading notes from path: " + path)
+        notes = self.readNotesFromPath(path)
+        
+        print("Summarizing notes...")
+        pre_summary = self.preSummary(notes)
+        
+        print("Summarizing summaries...")
+        summary = self.summarizePreSummaries(pre_summary)
+        
+        print("Creating prompts...")
+        prompts = self.createPromptFromSummaries(summary)
+        
+        print("Cleaning prompts...")
+        cleanedPrompts = [self.cleanPrompt(prompt) for prompt in prompts]
+        
+        return cleanedPrompts
 
 if __name__ == "__main__":
     summarizer = Summarizer()

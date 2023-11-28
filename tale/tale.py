@@ -9,15 +9,17 @@ if __name__ == "__main__":
     # create an instance of the class
     text2image = Text2Image()
     summarizer = Summarizer()
-    postProc = PostProcessor()
+  #  postProc = PostProcessor()
     
     # get prompts from the notes
-    prompts = summarizer.getPropmtsFromNotes("data//dummy//input//input.txt")
+    prompts = summarizer.getPropmtsFromNotes("data//dummy//input//the_sprawl//")
+    
+    print(prompts)
     
     
     # generate images from the prompts
-    text2image.generateImages(prompts)
+  #  text2image.generateImages(prompts)
     
     # generate html file from the images
-    postProc.generateHtmlFile()
+ #   postProc.generateHtmlFile()
     
