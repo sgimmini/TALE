@@ -5,6 +5,8 @@ from openai import OpenAI
 import base64
 import requests
 from PIL import Image
+from tqdm import tqdm
+
 
 class Text2Image:
     """
@@ -68,7 +70,7 @@ class Text2Image:
         image.save(path)
         return
     
-    def text2image_openai(self, prompt, resolution="512x512"):
+    def text2image_openai(self, prompt, resolution="1024x1024"):
         """
         This function takes a prompt as input and returns an image as output.
         :param prompt: a string of text
@@ -104,6 +106,27 @@ class Text2Image:
         # img = Image.open(response.raw)
         
         # save the image
+        
+    def generateImages(self, prompt_path: str):
+        """This function takes a list of prompts as input and returns a list of images as output"""
+        # generate the images
+        # open a json file and load the content
+        processor = pre_processor.PreProcessor()
+    
+        # load the content
+        content = processor.load_json(prompt_path)
+        
+        with tqdm(total=len(content), desc="Generating Images...") as pbar:
+            for key, value in content.items():
+                prompt = value
+                # generate the image
+                test_image = self.text2image_openai(prompt, "1024x1024")
+
+                # save the image
+                self.save_image_openai(test_image, "data//dummy//output//" + key + ".png")
+                pbar.update(1)
+                
+        return 
         
 
 if __name__ == "__main__":

@@ -13,12 +13,13 @@ if __name__ == "__main__":
     
     # get prompts from the notes
     prompts = summarizer.getPropmtsFromNotes("data//dummy//input//the_sprawl//")
-    
-    print(prompts)
-    
-    
+    # write the prompts to a json file
+    f = open("data//dummy//input//gpt_created_prompts.json", "w")
+    f.write(prompts)
+    f.close()
+
     # generate images from the prompts
-  #  text2image.generateImages(prompts)
+    text2image.generateImages("data//dummy//input//gpt_created_prompts.json")
     
     # generate html file from the images
  #   postProc.generateHtmlFile()

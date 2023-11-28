@@ -3,6 +3,7 @@ import openai
 from openai import OpenAI
 from pre_processor import PreProcessor
 from tqdm import tqdm
+import json
 
 class Summarizer:
     """This class contains functions to summarize notes into prompts"""
@@ -47,7 +48,7 @@ class Summarizer:
         """This function takes a list of notes as input and returns a single string as output"""
         # create a single string
         summaries = []
-        for text in texts:
+        for text in tqdm(texts):
             summaries.append(self.summarize(text))
         return summaries
     
@@ -77,10 +78,12 @@ class Summarizer:
     
     def createPromptFromSummaries(self, summary):
 
-        prompt = """You are a prompt generation machine for image generation. Summarize the given story in 7 scenes.  Instead of telling the story outright, describe each scene in detail as if frozen in time. Your output will be used as input for a text-to-image generation model, so ensure that logical constraints are met. For example: Do not use names, but rather describe characters & locations in detail. Focus on detailed descriptions. 
-        If you introduce a character, describe them with 3–4 points. If you introduce a place, describe them with 3-4 points. 
-        Re-use descriptions if you re-use a location or a character. Each scene should be described as a moment in time, so as not to confuse the text-to-image model through changes in places / times.  
-        Each scene must have a MAXIMUM length of 200 words and a minimum of 100 words. ART DIRECTION is always the exact WORDS in each scene. Output the story in the following format:
+        prompt = """You are a prompt generation machine for image generation. Summarize the given story in as many scenes as needed. Each scene should be told in one prompt.
+        Instead of telling the story outright, describe each prompt in detail as if frozen in time. 
+        Your output will be used as input for a text-to-image generation model, so ensure that logical constraints are met. 
+        Do not describe characters or locations but rather use their names. If you describe only use descriptions from the input.
+        Each prompt should be described as a moment in time, so as not to confuse the text-to-image model through changes in places / times.  
+        Each prompt must have a minimum number of 100 words. ART DIRECTION is always the exact WORDS in each prompt. Output the story in the following format:
 
             {
             "1": "DESCRIPTION OF SCENE 1 + ART DIRECTION",
@@ -98,7 +101,11 @@ class Summarizer:
 
             Do not be dramatic and only use words which a spectator would use to describe the scene to a computer program.
 
-            Use words like "HD" and "hyperrealistic" in your art direction to ensure a crisp image. Do not repeat descriptions from the scene in the ARE DIRECTION. The ART DIRECTION should only contain direction for coloring and drawing of the image."""
+            Use words like "HD" and "hyperrealistic" in your art direction to ensure a crisp image. Do not repeat descriptions from the scene in the ARE DIRECTION. 
+            The ART DIRECTION should only contain direction for mood, coloring and drawing of the image.
+            
+            Do no use the " character in your prompt since it will break the json file.
+            """
         
         response = self.client.chat.completions.create(
         model="gpt-3.5-turbo",
@@ -113,10 +120,10 @@ class Summarizer:
     def cleanPrompt(self, prompt):
         """This function takes a string as input and returns a string as output"""
         # load context.json
-        PreProcessor = PreProcessor()
-        context = PreProcessor.loadJson("data//dummy//input//context.json")
+        processor = PreProcessor()
+        context = processor.load_json("data//dummy//input//context.json")
         
-        # clean the prompt by substituting names which are keys in context.json with their values with tqdm loading bar
+        # clean the prompt by substituting names which are keys in context.json with their values
         for key in tqdm(context):
             prompt = prompt.replace(key, context[key])
         
@@ -128,24 +135,30 @@ class Summarizer:
         """This function takes a path as input and returns a list of prompts as output"""
         # create a list of prompts
         prompts = []
-        
-        print("Reading notes from path: " + path)
-        notes = self.readNotesFromPath(path)
-        
-        print("Summarizing notes...")
-        pre_summary = self.preSummary(notes)
-        
-        print("Summarizing summaries...")
-        summary = self.summarizePreSummaries(pre_summary)
-        
-        print("Creating prompts...")
-        prompts = self.createPromptFromSummaries(summary)
-        
-        print("Cleaning prompts...")
-        cleanedPrompts = [self.cleanPrompt(prompt) for prompt in prompts]
-        
-        return cleanedPrompts
+        with tqdm(total=100) as pbar:
+            pbar.set_description("Loading notes...")
+            notes = self.readNotesFromPath(path)
+            pbar.update(20)
+            
+            pbar.set_description("Summarizing notes...")
+            pre_summary = self.preSummary(notes)
+            pbar.update(20)
+            
+            pbar.set_description("Summarizing summaries...")
+            summary = self.summarizePreSummaries(pre_summary)
+            pbar.update(20)
+            
+            pbar.set_description("Creating prompts...")
+            prompts = self.createPromptFromSummaries(summary)
+            pbar.update(20)
 
+            pbar.set_description("Cleaning prompts...")
+            prompts = self.cleanPrompt(prompts)
+            pbar.update(20)
+            
+        return prompts
+    
+    
 if __name__ == "__main__":
     summarizer = Summarizer()
     notes = summarizer.readNotesFromPath("data//dummy//input//the_sprawl//")
