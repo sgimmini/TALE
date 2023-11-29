@@ -116,6 +116,16 @@ class Summarizer:
         )
         return response.choices[0].message.content
     
+    def sendPromptToGPT(self, system, user):        
+        response = self.client.chat.completions.create(
+        model="gpt-3.5-turbo",
+        messages=[
+            {"role": "system", "content": system},
+            {"role": "user", "content": user},
+             ]
+        )
+        return response.choices[0].message.content
+    
     
     def cleanPrompt(self, prompt):
         """This function takes a string as input and returns a string as output"""
@@ -128,6 +138,19 @@ class Summarizer:
             prompt = prompt.replace(key, context[key])
         
         return prompt
+    
+    
+    def indexNotes(self, story, prompts):
+        system = """
+            You are given two inputs:
+            A story and image creation prompts.
+            The image creation prompts were created based upon the story. Prompts are numbered and can be identified with their respective number.
+            Insert the prompt numbers at the correct positions of the story where they would fit as descriptions.
+            Do not change any of the input texts but only move around positions. Only insert the number and not the full prompt by saying INSERT_PROMPT: NUMBER
+        """
+        user = "STORY: \n\n" + story + "\n\n PROMPTS: \n\n" + prompts
+        response = self.sendPromptToGPT(system=system, user=user)
+        return response
         
         
 
@@ -135,28 +158,34 @@ class Summarizer:
         """This function takes a path as input and returns a list of prompts as output"""
         # create a list of prompts
         prompts = []
-        with tqdm(total=100) as pbar:
+        with tqdm(total=6) as pbar:
             pbar.set_description("Loading notes...")
             notes = self.readNotesFromPath(path)
-            pbar.update(20)
+            pbar.update(1)
             
             pbar.set_description("Summarizing notes...")
             pre_summary = self.preSummary(notes)
-            pbar.update(20)
+            pbar.update(1)
             
             pbar.set_description("Summarizing summaries...")
             summary = self.summarizePreSummaries(pre_summary)
-            pbar.update(20)
+            pbar.update(1)
+            
+            print(summary)
             
             pbar.set_description("Creating prompts...")
             prompts = self.createPromptFromSummaries(summary)
-            pbar.update(20)
+            pbar.update(1)
+            
+            pbar.set_description("Finding prompt positions...")
+            indexedNotes = self.indexNotes(summary, prompts)
+            pbar.update(1)            
 
             pbar.set_description("Cleaning prompts...")
             prompts = self.cleanPrompt(prompts)
-            pbar.update(20)
+            pbar.update(1)
             
-        return prompts
+        return prompts, indexedNotes
     
     
 if __name__ == "__main__":
