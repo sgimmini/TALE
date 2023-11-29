@@ -83,6 +83,7 @@ class Summarizer:
         Your output will be used as input for a text-to-image generation model, so ensure that logical constraints are met. 
         Do not describe characters or locations but rather use their names. If you describe only use descriptions from the input.
         Each prompt should be described as a moment in time, so as not to confuse the text-to-image model through changes in places / times.  
+        Generate a maximum of 7 prompts.
         Each prompt must have a minimum number of 100 words. ART DIRECTION is always the exact WORDS in each prompt. Output the story in the following format:
 
             {
@@ -146,7 +147,9 @@ class Summarizer:
             A story and image creation prompts.
             The image creation prompts were created based upon the story. Prompts are numbered and can be identified with their respective number.
             Insert the prompt numbers at the correct positions of the story where they would fit as descriptions.
-            Do not change any of the input texts but only move around positions. Only insert the number and not the full prompt by saying INSERT_PROMPT: NUMBER
+            Do not change any of the input texts but only move around positions. Only insert the number and not the full prompt by saying (number of prompt).
+            
+            Use every prompt only once.
         """
         user = "STORY: \n\n" + story + "\n\n PROMPTS: \n\n" + prompts
         response = self.sendPromptToGPT(system=system, user=user)
@@ -170,8 +173,6 @@ class Summarizer:
             pbar.set_description("Summarizing summaries...")
             summary = self.summarizePreSummaries(pre_summary)
             pbar.update(1)
-            
-            print(summary)
             
             pbar.set_description("Creating prompts...")
             prompts = self.createPromptFromSummaries(summary)
