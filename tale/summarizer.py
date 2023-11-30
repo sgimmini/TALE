@@ -105,6 +105,8 @@ class Summarizer:
             The ART DIRECTION should only contain direction for mood, coloring and drawing of the image.
             
             Do no use the " character in your prompt since it will break the json file.
+            
+            Create a maxmimum of 5 prompts. Do not exceed this limit but also do create less then 5 prompts.
             """
         
         response = self.sendPromptToGPT(system=prompt, user=summary, temperature=0.5, model="gpt-3.5-turbo", top_p=0.4)
@@ -143,27 +145,43 @@ class Summarizer:
             You are given two inputs:
             A story and a number of image creation prompts. Prompts are numbered and can be identified with their respective number.
             Insert the prompt numbers at the correct positions of the story where they would fit as descriptions.
+            The story starts with the word STORY and the prompts start with the word PROMPTS.
             
             Use each prompt only once and in order of their number.
             
-            The output should be a single string which contains the story with the prompts inserted at the correct positions like this:
+            If you would get an input like this: 
+            
+            "STORY: Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.   
+                    Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. 
+                    At vero eos et accusam et justo duo dolores et ea rebum.  Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
+            PROMPTS:
+            {
+            "1": "DESCRIPTION OF SCENE 1 + ART DIRECTION",
+            "2" : "DESCRIPTION OF SCENE 2 + ART DIRECTION",
+            }
+            
+            The output should be a single string which contains the WHOLE story with the prompts inserted at the correct positions like this:
+            
+            "
             
             Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. 
             
-            (1) 
+            (1)
             
-            At vero eos et accusam et justo duo dolores et ea rebum.  
+            Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. 
             
-            (2) 
+            (2)
             
-            Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
+            At vero eos et accusam et justo duo dolores et ea rebum.  Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
             
+            "
             
             Do not change any of the input texts but only move around positions. Only insert the number and not the full prompt by saying (number of prompt).
-            Use all prompts exactly once. Do not leave any prompts out.
+            Use all prompts exactly once. Do not leave any prompts out. Do not shorten or lengthen the texts and do not add any additional text. 
+            Represent the prompts onlny through numbers in brackets. Do not use any other characters in the brackets.
         """
         user = "STORY: \n\n" + story + "\n\n PROMPTS: \n\n" + prompts
-        response = self.sendPromptToGPT(system=system, user=user, temperature=1)
+        response = self.sendPromptToGPT(system=system, user=user, temperature=0.3, top_p=0.2)
         return response
         
         
