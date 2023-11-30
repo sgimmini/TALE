@@ -35,11 +35,6 @@ class PostProcessor:
         head.append(soup.new_tag('style', type='text/css'))
         head.style.append(dummy_css)
 
-        # set the first header
-        new_h1 = soup.new_tag('h1')
-        new_h1['class'] = 'fire'
-        soup.find('div', {'class': 'content'}).append(new_h1)
-        
         # open path to images
         path = 'C://Users//fraul//Documents//GitHub//TALE//data//dummy//output'
         print(re.findall(r"\((100|[1-9]?\d)\)", indexedStory))
@@ -47,12 +42,21 @@ class PostProcessor:
         for i in tqdm(re.findall(r'\(\d+\)', indexedStory), desc="Generating HTML..."):
             # find the index of the occurence
             index = indexedStory.index(i)
-            # add the part of the story before the occurence to the html file
-            soup.find('div', {'class': 'content'}).append(indexedStory[:index])
-            # add the image to the html file
-            soup.find('div', {'class': 'content'}).append(soup.new_tag('img', src=path + '//image' + i[1:-1] + '.png'))
-            # remove the part of the story before the occurence from the indexed story
-            indexedStory = indexedStory[index + len(i):]    
+            # create a new section with class "content-block"
+            new_section = soup.new_tag('section')
+            new_section['class'] = 'content-block'
+            # add a image to the section
+            new_img = soup.new_tag('img')
+            new_img['src'] = path + "//" + str(i[1]) + ".png"
+            new_section.append(new_img)
+            # add a paragraph to the section
+            new_p = soup.new_tag('p')
+            new_p.string = indexedStory[:index]
+            
+            # add the section to the html file
+            new_section.append(new_p)
+            # add the section to the html file body
+            soup.body.append(new_section)
 
         return soup.prettify()
     
