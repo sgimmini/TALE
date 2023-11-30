@@ -179,6 +179,7 @@ class Summarizer:
             Do not change any of the input texts but only move around positions. Only insert the number and not the full prompt by saying (number of prompt).
             Use all prompts exactly once. Do not leave any prompts out. Do not shorten or lengthen the texts and do not add any additional text. 
             Represent the prompts onlny through numbers in brackets. Do not use any other characters in the brackets.
+            Do not include the word PROMPTS or STORY in the output.
         """
         user = "STORY: \n\n" + story + "\n\n PROMPTS: \n\n" + prompts
         response = self.sendPromptToGPT(system=system, user=user, temperature=0.3, top_p=0.2)

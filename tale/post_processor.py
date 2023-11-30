@@ -71,7 +71,7 @@ class PostProcessor:
             
             # Create and append a new 'h2' tag to the text content
             header = soup.new_tag('h2')
-            header.string = f"Heading"
+            header.string = f""
             text_content.append(header)
             
             # Create and append a new 'p' tag to the text content
