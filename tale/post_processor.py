@@ -44,8 +44,10 @@ class PostProcessor:
         # regex
         regex = re.findall(r'\(\d+\)', indexedStory)
         
+        
+        last_index = 0
         # using regular expressions find all occurences of (NUMERIC) in indexed story, add the part of the story before the occurence to the html file, add the image to the html file
-        for i in tqdm(len(regex), desc="Generating HTML..."):
+        for i in tqdm(range(len(regex)), desc="Generating HTML..."):
             # find the index of the occurence
             index = indexedStory.index(regex[i])
                      
@@ -58,7 +60,7 @@ class PostProcessor:
              
             # Set the inline background image style for the new content block
             new_block_style = f"""
-                background: url('{path + "//" + str(i) + ".png"}') no-repeat center center;
+                background: url('{path + "//" + str(i+1) + ".png"}') no-repeat center center;
                 background-size: cover;
                 """
             new_block['style'] = new_block_style.strip()
@@ -69,21 +71,28 @@ class PostProcessor:
             
             # Create and append a new 'h2' tag to the text content
             header = soup.new_tag('h2')
-            header.string = f"Block {i} Heading"
+            header.string = f"Heading"
             text_content.append(header)
             
             # Create and append a new 'p' tag to the text content
             paragraph = soup.new_tag('p')
-            paragraph.string = indexedStory[:index]
+            paragraph.string = indexedStory[last_index:index]
             
             
             # if the index is not the last index of the list add also the part of the story after the occurence to the html file
             if i == len(regex) - 1:
                 paragraph.string += indexedStory[index:]
                 
+            # remove from paragraph string any occurence of (NUMERIC)
+            remove_regex = re.findall(r'\(\d+\)', paragraph.string)
+            for i in range(len(remove_regex)):
+                paragraph.string = paragraph.string.replace(remove_regex[i], "")
+                
             text_content.append(paragraph)
             # Insert the new content block into the placeholder div
             new_content_div.append(new_block)
+            
+            last_index = index
             
 
         new_content_div.unwrap()
