@@ -123,7 +123,7 @@ class Text2Image:
             for key, value in content.items():
                 prompt = value
                 # generate the image
-                test_image = self.text2image_openai(prompt, "1024x1024")
+                test_image = self.text2image_openai(prompt, "1792x1024")
                 if test_image is not None:
                     # save the image
                     self.save_image_openai(test_image, "data//dummy//output//" + key + ".png")

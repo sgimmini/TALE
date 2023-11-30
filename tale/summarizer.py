@@ -115,7 +115,7 @@ class Summarizer:
             {"role": "system", "content": prompt},
             {"role": "user", "content": summary},
              ],
-        temperature=0.5,
+        temperature=0.8,
         )
         return response.choices[0].message.content
     
@@ -169,7 +169,7 @@ class Summarizer:
             Do not change any of the input texts but only move around positions. Only insert the number and not the full prompt by saying (number of prompt).
         """
         user = "STORY: \n\n" + story + "\n\n PROMPTS: \n\n" + prompts
-        response = self.sendPromptToGPT(system=system, user=user, temperature=0.5)
+        response = self.sendPromptToGPT(system=system, user=user, temperature=0.9)
         return response
         
         

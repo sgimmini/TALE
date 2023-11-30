@@ -34,30 +34,51 @@ class PostProcessor:
         head = soup.find('head')
         head.append(soup.new_tag('style', type='text/css'))
         head.style.append(dummy_css)
+        
+        # Find the placeholder div where new content will be added
+        new_content_div = soup.find('div', id='new-content')
 
         # open path to images
         path = 'C://Users//fraul//Documents//GitHub//TALE//data//dummy//output'
         print(re.findall(r"\((100|[1-9]?\d)\)", indexedStory))
+        
         # using regular expressions find all occurences of (NUMERIC) in indexed story, add the part of the story before the occurence to the html file, add the image to the html file
         for i in tqdm(re.findall(r'\(\d+\)', indexedStory), desc="Generating HTML..."):
             # find the index of the occurence
             index = indexedStory.index(i)
-            # create a new section with class "content-block"
-            new_section = soup.new_tag('section')
-            new_section['class'] = 'content-block'
-            # add a image to the section
-            new_img = soup.new_tag('img')
-            new_img['src'] = path + "//" + str(i[1]) + ".png"
-            new_section.append(new_img)
-            # add a paragraph to the section
-            new_p = soup.new_tag('p')
-            new_p.string = indexedStory[:index]
+                     
+            # Create a new 'div' for the content block
+            new_block = soup.new_tag('div', attrs={'class': 'content-block', 'id': f'block{i}'})
             
-            # add the section to the html file
-            new_section.append(new_p)
-            # add the section to the html file body
-            soup.body.append(new_section)
+            # Add an additional class for skew direction
+            skew_class = 'skew-left' if int(i[1]) % 2 == 0 else 'skew-right'
+            new_block['class'] = new_block.get('class', []) + [skew_class]
+             
+            # Set the inline background image style for the new content block
+            new_block_style = f"""
+                background: url('{path + "//" + str(i[1]) + ".png"}') no-repeat center center;
+                background-size: cover;
+                """
+            new_block['style'] = new_block_style.strip()
+            
+            # Create a new 'div' for text content
+            text_content = soup.new_tag('div', attrs={'class': 'text-content'})
+            new_block.append(text_content)
+            
+            # Create and append a new 'h2' tag to the text content
+            header = soup.new_tag('h2')
+            header.string = f"Block {i} Heading"
+            text_content.append(header)
+            
+            # Create and append a new 'p' tag to the text content
+            paragraph = soup.new_tag('p')
+            paragraph.string = indexedStory[:index]
+            text_content.append(paragraph)
+            
+            # Insert the new content block into the placeholder div
+            new_content_div.append(new_block)
 
+        new_content_div.unwrap()
         return soup.prettify()
     
     def writeHtml(self, path, html):
