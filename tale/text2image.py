@@ -79,15 +79,18 @@ class Text2Image:
         
         if self.client is None:
             self.init_openai()
-        
-        response = self.client.images.generate(
-            model="dall-e-3",
-            prompt=prompt,
-            size=resolution,
-            quality="standard",
-            n=1,
-        )
-        return response.data[0].url
+        try:
+            response = self.client.images.generate(
+                model="dall-e-3",
+                prompt=prompt,
+                size=resolution,
+                quality="standard",
+                n=1,
+            )
+            return response.data[0].url
+        except openai.BadRequestError as e:
+            print(e)
+            return None
     
     def save_image_openai(self, image, path):
         """
@@ -121,9 +124,9 @@ class Text2Image:
                 prompt = value
                 # generate the image
                 test_image = self.text2image_openai(prompt, "1024x1024")
-
-                # save the image
-                self.save_image_openai(test_image, "data//dummy//output//" + key + ".png")
+                if test_image is not None:
+                    # save the image
+                    self.save_image_openai(test_image, "data//dummy//output//" + key + ".png")
                 pbar.update(1)
                 
         return 

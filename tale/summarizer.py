@@ -78,13 +78,12 @@ class Summarizer:
     
     def createPromptFromSummaries(self, summary):
 
-        prompt = """You are a prompt generation machine for image generation. Summarize the given story in as many scenes as needed. Each scene should be told in one prompt.
-        Instead of telling the story outright, describe each prompt in detail as if frozen in time. 
-        Your output will be used as input for a text-to-image generation model, so ensure that logical constraints are met. 
-        Do not describe characters or locations but rather use their names. If you describe only use descriptions from the input.
-        Each prompt should be described as a moment in time, so as not to confuse the text-to-image model through changes in places / times.  
-        Generate a maximum of 7 prompts.
-        Each prompt must have a minimum number of 100 words. ART DIRECTION is always the exact WORDS in each prompt. Output the story in the following format:
+        # Reminder: When prompting use the RTFC (Role, Task, Format, Constraint) format for best results. To ensure that the output is more reliable, do not use as high of a temperature as you would for other tasks.
+        prompt = """You are a prompt generation machine for image generation. 
+        
+        Summarize the given story into a set of prompts which can be used to generate images. And output those prompts in a json file.
+        
+        The format of the json file should be as follows:
 
             {
             "1": "DESCRIPTION OF SCENE 1 + ART DIRECTION",
@@ -101,6 +100,8 @@ class Summarizer:
             }
 
             Do not be dramatic and only use words which a spectator would use to describe the scene to a computer program.
+            
+            Use a minimun of 100 words per prompt. 
 
             Use words like "HD" and "hyperrealistic" in your art direction to ensure a crisp image. Do not repeat descriptions from the scene in the ARE DIRECTION. 
             The ART DIRECTION should only contain direction for mood, coloring and drawing of the image.
@@ -113,17 +114,19 @@ class Summarizer:
         messages=[
             {"role": "system", "content": prompt},
             {"role": "user", "content": summary},
-             ]
+             ],
+        temperature=0.5,
         )
         return response.choices[0].message.content
     
-    def sendPromptToGPT(self, system, user):        
+    def sendPromptToGPT(self, system, user, temperature=0.8):        
         response = self.client.chat.completions.create(
         model="gpt-3.5-turbo",
         messages=[
             {"role": "system", "content": system},
             {"role": "user", "content": user},
-             ]
+             ],
+        temperature=temperature
         )
         return response.choices[0].message.content
     
@@ -143,16 +146,30 @@ class Summarizer:
     
     def indexNotes(self, story, prompts):
         system = """
+            You are a prompt insertion machine.
             You are given two inputs:
-            A story and image creation prompts.
-            The image creation prompts were created based upon the story. Prompts are numbered and can be identified with their respective number.
+            A story and a number of image creation prompts. Prompts are numbered and can be identified with their respective number.
             Insert the prompt numbers at the correct positions of the story where they would fit as descriptions.
-            Do not change any of the input texts but only move around positions. Only insert the number and not the full prompt by saying (number of prompt).
             
-            Use every prompt only once.
+            Use each prompt only once and in order of their number.
+            
+            The output should be a single string which contains the story with the prompts inserted at the correct positions like this:
+            
+            Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. 
+            
+            (1) 
+            
+            At vero eos et accusam et justo duo dolores et ea rebum.  
+            
+            (2) 
+            
+            Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
+            
+            
+            Do not change any of the input texts but only move around positions. Only insert the number and not the full prompt by saying (number of prompt).
         """
         user = "STORY: \n\n" + story + "\n\n PROMPTS: \n\n" + prompts
-        response = self.sendPromptToGPT(system=system, user=user)
+        response = self.sendPromptToGPT(system=system, user=user, temperature=0.5)
         return response
         
         
