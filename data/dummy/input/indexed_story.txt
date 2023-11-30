@@ -1,10 +1,8 @@
-STORY: 
-
 Chrom stands in front of his camping trailer in Essen, holding a tablet displaying footage of Nugget leaving the trailer park with other children. The trailer park is surrounded by tall trees, creating a sense of seclusion. Chrom's expression is determined as he formulates a plan to find Nugget. The colors are muted, reflecting the somber mood of the scene. The lighting is soft, casting long shadows on the ground.
 
 opened, reveals a hidden passage leading to an underground facility.
 
-The timeline of events begins with Chrom, who lives in a camping trailer in Essen. He discovers footage of Nugget, Adelle's missing sister, leaving the trailer park with other children. Adelle, a biker, announces a reward for finding Nugget, sparking a search. Chrom suggests attaching a tracking chip to a drone but accidentally damages the flood gate, leaving it permanently open. As a severe storm approaches, Chrom eventually finds Nugget in a cave with two junkyard wolves.
+The timeline of events begins with Chrom, who lives in a camping trailer in Essen. He discovers footage of Nugget, Adelle's missing sister, leaving the trailer park with other children. Adelle, a biker, announces a reward for finding Nugget, sparking a search. Chrom suggests attaching a tracking chip to a drone and accidentally damages the flood gate, leaving it permanently open. As a severe storm approaches, Chrom eventually finds Nugget in a cave with two junkyard wolves.
 
 (1)
 
@@ -12,11 +10,11 @@ The scene then shifts to DaSun, specifically "Die Karibik," where the atmosphere
 
 (2)
 
-Next, the story transitions to Augusta, who works for CrisisInvest. She races against a rival in an official car race, effortlessly maneuvering the opponent's car into crashing into a bridge pillar. Augusta wears a hijab and a sexy nun outfit while driving a BMW T5 in the Tank Class.
+Next, the story transitions to Augusta, who works for CrisisInvest. She races against a rival in an official car race, effortlessly maneuvering the opponent's car into crashing into a bridge pillar. Augusta wears a hijab and a nun outfit while driving a BMW T5 in the Tank Class.
 
 (3)
 
-In another scene set in a small alley filled with capsule hotels, the protagonist encounters a person living in a capsule. This person hides their Neurallink clinics as headphones and aims to reach the Fog of War, a place of absolute anonymity. Inside the Fog of War, there is unrest, and the Kis group attempts to enter but is unable to do so due to monitoring. They argue for the right to anonymity and stage a demonstration, but the Red Star and ID prevent them from achieving true anonymity.
+In another scene set in a small alley filled with capsule hotels, the protagonist encounters a person living in a capsule. This person hides their Neurallink clinics as headphones and aims to reach the Fog of War, a place of absolute anonymity. Inside the Fog of War, there is unrest, and the AIs group attempts to enter but is unable to do so due to monitoring. They argue for the right to anonymity and stage a demonstration, but the Red Star and ID prevent them from achieving true anonymity.
 
 (4)
 
