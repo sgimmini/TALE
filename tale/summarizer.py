@@ -34,21 +34,20 @@ class Summarizer:
     
     def summarize(self, text):
         """This function takes a string as input and returns a string as output"""
+        
+        system = """You are a tabletop roleplaying notes summarizer. You are given a set of notes and you have to summarize them into a single string. Try to be specific about timelines and events as well as places and people. 
+        Try to give a long response to make sure that you get every detail right and nothing is missing."""
+        user = text
         # summarize the text
-        response = self.client.chat.completions.create(
-        model="gpt-3.5-turbo",
-        messages=[
-            {"role": "system", "content": "You are a tabletop roleplaying notes summarizer. You are given a set of notes and you have to summarize them into a single string. Try to be specific about timelines and events as well as places and people. Try to give a long response to make sure that you get every detail right and nothing is missing."},
-            {"role": "user", "content": text},
-             ]
-        )
-        return response.choices[0].message.content
+        response = self.sendPromptToGPT(system=system, user=user, temperature=0.5, model="gpt-3.5-turbo", top_p=0.4)
+        
+        return response
     
     def preSummary(self, texts):
         """This function takes a list of notes as input and returns a single string as output"""
         # create a single string
         summaries = []
-        for text in tqdm(texts):
+        for text in texts:
             summaries.append(self.summarize(text))
         return summaries
     
@@ -60,20 +59,19 @@ class Summarizer:
             model_input +="NOTE \n\n"
             model_input += s
         
-        prompt = """You are a summarization engine which is given a multitude of texts. These texts are summaries of notes from different players in a tabletop roleplayin game. 
+        prompt = """You are a summarization engine which is given a multitude of texts. 
+        
+        These texts are summaries of notes from different players in a tabletop roleplayin game. 
         All the summaries are about the same game but from different perspectives. Notes of different players are consecutive in the text. Therefore you have to match the same events, people and places in the different summaries.
         Create a single summary of all the notes. Try to be specific about timelines and events as well as places and people. Try to give a long response to make sure that you get every detail right and nothing is missing.
         Also make sure that you create a timeline of events. The timeline should be chronological and match between the different notes and should not contain any contradictions.
-        Notes of different Players are seperated by NOTE. \n\n"""
+        Notes of different Players are seperated by 
         
-        response = self.client.chat.completions.create(
-        model="gpt-3.5-turbo",
-        messages=[
-            {"role": "system", "content": prompt},
-            {"role": "user", "content": model_input},
-             ]
-        )
-        return response.choices[0].message.content
+        NOTE. \n\n"""
+        
+        response = self.sendPromptToGPT(system=prompt, user=model_input, temperature=0.5, model="gpt-3.5-turbo", top_p=0.4)
+
+        return response
     
     
     def createPromptFromSummaries(self, summary):
@@ -109,24 +107,19 @@ class Summarizer:
             Do no use the " character in your prompt since it will break the json file.
             """
         
-        response = self.client.chat.completions.create(
-        model="gpt-3.5-turbo",
-        messages=[
-            {"role": "system", "content": prompt},
-            {"role": "user", "content": summary},
-             ],
-        temperature=0.8,
-        )
-        return response.choices[0].message.content
+        response = self.sendPromptToGPT(system=prompt, user=summary, temperature=0.5, model="gpt-3.5-turbo", top_p=0.4)
+
+        return response
     
-    def sendPromptToGPT(self, system, user, temperature=0.8):        
+    def sendPromptToGPT(self, system, user, temperature=1, model="gpt-3.5-turbo", top_p=1):        
         response = self.client.chat.completions.create(
-        model="gpt-3.5-turbo",
+        model=model,
         messages=[
             {"role": "system", "content": system},
             {"role": "user", "content": user},
              ],
-        temperature=temperature
+        temperature=temperature,
+        top_p=top_p
         )
         return response.choices[0].message.content
     
@@ -138,7 +131,7 @@ class Summarizer:
         context = processor.load_json("data//dummy//input//context.json")
         
         # clean the prompt by substituting names which are keys in context.json with their values
-        for key in tqdm(context):
+        for key in context:
             prompt = prompt.replace(key, context[key])
         
         return prompt
@@ -167,9 +160,10 @@ class Summarizer:
             
             
             Do not change any of the input texts but only move around positions. Only insert the number and not the full prompt by saying (number of prompt).
+            Use all prompts exactly once. Do not leave any prompts out.
         """
         user = "STORY: \n\n" + story + "\n\n PROMPTS: \n\n" + prompts
-        response = self.sendPromptToGPT(system=system, user=user, temperature=0.9)
+        response = self.sendPromptToGPT(system=system, user=user, temperature=1)
         return response
         
         
@@ -178,7 +172,7 @@ class Summarizer:
         """This function takes a path as input and returns a list of prompts as output"""
         # create a list of prompts
         prompts = []
-        with tqdm(total=6) as pbar:
+        with tqdm(total=5) as pbar:
             pbar.set_description("Loading notes...")
             notes = self.readNotesFromPath(path)
             pbar.update(1)
@@ -186,7 +180,7 @@ class Summarizer:
             pbar.set_description("Summarizing notes...")
             pre_summary = self.preSummary(notes)
             pbar.update(1)
-            
+
             pbar.set_description("Summarizing summaries...")
             summary = self.summarizePreSummaries(pre_summary)
             pbar.update(1)

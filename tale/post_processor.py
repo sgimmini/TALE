@@ -40,23 +40,25 @@ class PostProcessor:
 
         # open path to images
         path = 'C://Users//fraul//Documents//GitHub//TALE//data//dummy//output'
-        print(re.findall(r"\((100|[1-9]?\d)\)", indexedStory))
+
+        # regex
+        regex = re.findall(r'\(\d+\)', indexedStory)
         
         # using regular expressions find all occurences of (NUMERIC) in indexed story, add the part of the story before the occurence to the html file, add the image to the html file
-        for i in tqdm(re.findall(r'\(\d+\)', indexedStory), desc="Generating HTML..."):
+        for i in tqdm(len(regex), desc="Generating HTML..."):
             # find the index of the occurence
-            index = indexedStory.index(i)
+            index = indexedStory.index(regex[i])
                      
             # Create a new 'div' for the content block
             new_block = soup.new_tag('div', attrs={'class': 'content-block', 'id': f'block{i}'})
             
             # Add an additional class for skew direction
-            skew_class = 'skew-left' if int(i[1]) % 2 == 0 else 'skew-right'
+            skew_class = 'skew-left' if i % 2 == 0 else 'skew-right'
             new_block['class'] = new_block.get('class', []) + [skew_class]
              
             # Set the inline background image style for the new content block
             new_block_style = f"""
-                background: url('{path + "//" + str(i[1]) + ".png"}') no-repeat center center;
+                background: url('{path + "//" + str(i) + ".png"}') no-repeat center center;
                 background-size: cover;
                 """
             new_block['style'] = new_block_style.strip()
@@ -73,10 +75,16 @@ class PostProcessor:
             # Create and append a new 'p' tag to the text content
             paragraph = soup.new_tag('p')
             paragraph.string = indexedStory[:index]
-            text_content.append(paragraph)
             
+            
+            # if the index is not the last index of the list add also the part of the story after the occurence to the html file
+            if i == len(regex) - 1:
+                paragraph.string += indexedStory[index:]
+                
+            text_content.append(paragraph)
             # Insert the new content block into the placeholder div
             new_content_div.append(new_block)
+            
 
         new_content_div.unwrap()
         return soup.prettify()
