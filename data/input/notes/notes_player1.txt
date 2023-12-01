@@ -1,5 +1,5 @@
 Lore:
-	- Wir sind in Essen
+	- Das Setting des Spiels ist in Essen
 		○ Im Süden des Ruhrgebiets sind die besseren Städte / Domes
 		○ Norden ist eher billig
 		○ Unter der Erde gibt es viiiele alte Tunnel wegen des Bergbaus
@@ -21,8 +21,8 @@ Lore:
 	- Chrom wohnt in einem Camping-Wagen
 		○ Schläft mit VR-Brille und verschmorten Haaren dort
 	- Eine Bikerin namens Adelle sucht ihre Schwester Nugget (12 Jahre alt)
-		○ Hat "Snakes on Wheels" dabei
-	- Crom findet Nuggets auf den Kameras, sie ist gestern mit anderen Kindern aus dem Trailerpark gegangen
+		○ Hat die Biker Gang "Snakes on Wheels" dabei
+	- Chrom findet Nuggets auf den Kameras, sie ist gestern mit anderen Kindern aus dem Trailerpark gegangen
 		○ Sie kam jedoch nicht wieder zurück…
 		○ Normalerweise gehen Kids nachts ins Ruhrtal, um dort Müll zu sammeln
 	- Adelle macht eine Ansage:
@@ -38,8 +38,8 @@ Lore:
 	- Sie ist in einer Höhle mit zwei Schrottwölfen
 	
 
-	- DaSun "Die Karibik"
-	- Ein Passant räuspert sich und spuckt etwas Schleim im hohen Bogen in eine Gasse; die Flüssigkeit ist tief schwarz von all dem Staub in seiner Lunge
+	- DaSun (eine Marke an Bars von TempestTech) "Die Karibik" (eine Filiale von DaSun)
+	- Eagle Passant räuspert sich und spuckt etwas Schleim im hohen Bogen in eine Gasse; die Flüssigkeit ist tief schwarz von all dem Staub in seiner Lunge
 	- Es ist drückend heiß und die Stickigkeit kann einen fast in Ohnmacht fallen lassen
 	- Dunkle Gassen und Gänge wechseln sich ab mit flackernden Neonlichtern
 		○ Die Stickigkeit lässt keinen Geruch zu
@@ -52,26 +52,26 @@ Lore:
 	- Bei näherer  Betrachtung zu sehen ist das wasser kaum Knöcheltief
 		○ Trotzdem stehen alle paar Meter fette Schilder, welche garanteiren, dass Tempest Tech nicht für Ertrunkene Personen haften
 
-Ich gehe zur Karibik:
-	- Augusta ist in Stöckelschuhen dort unterwegs mit einer Hijab & sexy Nonnen-Outfit
+Eagle geht zur Karibik:
+	- Augusta ist in Stöckelschuhen dort unterwegs in Nonnen-Outfit
 		○ Samuel Sanchez Gonzalez ist neu im Team von MilPool gekommen
-		○ CrisisInvest
-		○ Ich soll für sie ein Rennen gegen den Typen fahren, weil die beiden Beef haben
-		○ Irgendwie fahren die offizielle Autorennen auf dem Weg zur Arbeit
+		○ Er war vorher bei CrisisInvest
+		○ Eagle soll geheim für Augusta ein Rennen gegen den Typen fahren, weil die beiden Beef haben
+		○ Auf dem Weg zur Arbeit werden von ihnen offizielle Rennen gefahren
 	- BMW T5 (Tank Class)
-		○ Gegner fährt KMW-Stier
-	- Wir fahren morgens los…
+		○ Gonzalez fährt KMW-Stier
+	- Eagle und Augsta fahren morgens los…
 		○ Das Ding hat einfach Reifen und ist auch sonst unnötig benutzerfreundlich
-		○ Wir geraten in das Rennen mit dem stier
-		○ Ich führe einen lässigen Paso Doble auf und bändige den Stier gegen einen Brückenpfeiler
+		○ Eagle und Augsta geraten in das Rennen mit dem stier
+		○ Wie bei einem Stierkampf färt Eagle um Gonzalez herum und lässt ihn gegen einen Pfeiler krachen
 
-In einer kleinen Gasse unterwegs, hier gibt es viele Kapsel-Hotels
+In einer kleinen Gasse gibt es viele Kapsel-Hotels
 	- Elektrische Strahlung macht krank
 	- In der gegend gibt es viele Daten, welche fließen, da ein Knotenpunkt in der Nähe ist
-	- Wohnt selber in einer Kapsel
+	- Bitwise wohnt selber in einer Kapsel
 	- Hat Neurallink-Klinen als Kopfhörer versteckt
-	- Relativ ungepflegt und klein aussehende Person
-Klinkt sich ein in die Matrix:
+	- Bitwise ist eine Relativ ungepflegt und klein aussehende Person
+Bitwise Klinkt sich ein in die Matrix:
 	- Möchte zum Fog of War: Ein ort absoluter Annonymität
 	- Avatar ist Standard humanoider Avatar mit schwarzes Loch Material
 	- Im FOW wird es unruhig

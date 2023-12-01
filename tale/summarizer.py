@@ -55,21 +55,25 @@ class Summarizer:
         """This function takes a list of summaries as input and returns a single string as output"""
         model_input = ""
         # summarize the text
-        for s in summaries:
-            model_input +="NOTE \n\n"
-            model_input += s
+        for i in range(len(summaries)):
+            model_input +="NOTE" + str(i+1) +" \n\n"
+            model_input += summaries[i]
         
         prompt = """You are a summarization engine which is given a multitude of texts. 
         
-        These texts are summaries of notes from different players in a tabletop roleplayin game. 
-        All the summaries are about the same game but from different perspectives. Notes of different players are consecutive in the text. Therefore you have to match the same events, people and places in the different summaries.
-        Create a single summary of all the notes. Try to be specific about timelines and events as well as places and people. Try to give a long response to make sure that you get every detail right and nothing is missing.
-        Also make sure that you create a timeline of events. The timeline should be chronological and match between the different notes and should not contain any contradictions.
-        Notes of different Players are seperated by 
+        These texts are summaries of consecutive sessions of a tabletop roleplaying game.
+        All the summaries are about the same game and are in chronological order.
         
+        Your task is to summarize all the summaries into a single summary which contains all the information of the previous summaries.
+        Do not leave out any information and try to be as specific as possible.
+        
+        The format of the output should be interesting to read and should be in the form of a story.
+        The output should be as long as possible and must contain between 600 and 700 words.
+        
+        Do not invent any new information but only use the information which is already contained in the summaries, but still try to be as entertaining as possible.
         NOTE. \n\n"""
         
-        response = self.sendPromptToGPT(system=prompt, user=model_input, temperature=0.6, model="gpt-3.5-turbo", top_p=0.5)
+        response = self.sendPromptToGPT(system=prompt, user=model_input, temperature=0.6, model="gpt-3.5-turbo", top_p=0.7)
 
         return response
     
@@ -109,7 +113,7 @@ class Summarizer:
             Create a maxmimum of 5 prompts. Do not exceed this limit but also do create less then 5 prompts.
             """
         
-        response = self.sendPromptToGPT(system=prompt, user=summary, temperature=0.5, model="gpt-3.5-turbo", top_p=0.4)
+        response = self.sendPromptToGPT(system=prompt, user=summary, temperature=0.2, model="gpt-3.5-turbo", top_p=0.3)
 
         return response
     
@@ -180,9 +184,11 @@ class Summarizer:
             Use all prompts exactly once. Do not leave any prompts out. Do not shorten or lengthen the texts and do not add any additional text. 
             Represent the prompts onlny through numbers in brackets. Do not use any other characters in the brackets.
             Do not include the word PROMPTS or STORY in the output.
+            
+            Do include ALL given promptes exactly once. So if you would see prompts 1-5 you must include (1), (2), (3), (4), (5) in the output exactly once.
         """
         user = "STORY: \n\n" + story + "\n\n PROMPTS: \n\n" + prompts
-        response = self.sendPromptToGPT(system=system, user=user, temperature=0.3, top_p=0.2)
+        response = self.sendPromptToGPT(system=system, user=user, temperature=0.2, top_p=0.3)
         return response
         
         

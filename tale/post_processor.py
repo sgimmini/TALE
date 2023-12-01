@@ -28,7 +28,7 @@ class PostProcessor:
         soup = BeautifulSoup(dummy_html, 'html.parser')
 
         # set the title
-        soup.title.string = "We are still testing"
+        soup.title.string = "TALE"
 
         # add css to the html file
         head = soup.find('head')
@@ -60,7 +60,7 @@ class PostProcessor:
              
             # Set the inline background image style for the new content block
             new_block_style = f"""
-                background: url('{str(i+1) + ".png"}') no-repeat center center;
+                background: url('{regex[i][1] + ".png"}') no-repeat center center;
                 background-size: cover;
                 """
             new_block['style'] = new_block_style.strip()
