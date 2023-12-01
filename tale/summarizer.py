@@ -39,7 +39,7 @@ class Summarizer:
         Try to give a long response to make sure that you get every detail right and nothing is missing."""
         user = text
         # summarize the text
-        response = self.sendPromptToGPT(system=system, user=user, temperature=0.5, model="gpt-3.5-turbo", top_p=0.4)
+        response = self.sendPromptToGPT(system=system, user=user, temperature=0.7, model="gpt-3.5-turbo", top_p=0.6)
         
         return response
     
@@ -69,7 +69,7 @@ class Summarizer:
         
         NOTE. \n\n"""
         
-        response = self.sendPromptToGPT(system=prompt, user=model_input, temperature=0.5, model="gpt-3.5-turbo", top_p=0.4)
+        response = self.sendPromptToGPT(system=prompt, user=model_input, temperature=0.6, model="gpt-3.5-turbo", top_p=0.5)
 
         return response
     
@@ -104,7 +104,7 @@ class Summarizer:
             Use words like "HD" and "hyperrealistic" in your art direction to ensure a crisp image. Do not repeat descriptions from the scene in the ARE DIRECTION. 
             The ART DIRECTION should only contain direction for mood, coloring and drawing of the image.
             
-            Do no use the " character in your prompt since it will break the json file.
+            Do not break the json format by using characters like " inside the prompts.
             
             Create a maxmimum of 5 prompts. Do not exceed this limit but also do create less then 5 prompts.
             """
@@ -130,7 +130,7 @@ class Summarizer:
         """This function takes a string as input and returns a string as output"""
         # load context.json
         processor = PreProcessor()
-        context = processor.load_json("data//dummy//input//context.json")
+        context = processor.load_json("data//input//context.json")
         
         # clean the prompt by substituting names which are keys in context.json with their values
         for key in context:
@@ -221,7 +221,7 @@ class Summarizer:
     
 if __name__ == "__main__":
     summarizer = Summarizer()
-    notes = summarizer.readNotesFromPath("data//dummy//input//the_sprawl//")
+    notes = summarizer.readNotesFromPath("data//input//the_sprawl//")
 
     pre_summary = summarizer.preSummary(notes)
     summary = summarizer.summarizePreSummaries(pre_summary)
