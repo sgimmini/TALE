@@ -1,5 +1,7 @@
-from content import Content
 from bs4 import BeautifulSoup
+import re
+from tqdm import tqdm
+import os
 
 class PostProcessor:
     """
@@ -7,58 +9,92 @@ class PostProcessor:
     Attributes:
         content (Content) : The content to be processed
     """
-    content = Content('', [''], [''])
 
-    def __init__(self, content):
-        """
-        The constructor for the PostProcessor class.
-        Attributes:
-            content (Content) : The content to be processed
-        """
-        self.content = content
+    def __init__(self):
         return
 
-
-    def generateHtml(self):
+    def generateHtml(self, indexedStory):
         """
         Generates a html string from the content.
         Returns:
             html (str) : The html string
         """
         # read html structure from html file
-        dummy_html = open('source//data//dummy//website//dummy.html', 'r').read()
+        dummy_html = open(os.path.join(os.getcwd(), "data", "website", "dummy.html"), "r").read()
         # read corresponding css file
-        dummy_css = open('source//data//dummy//website//dummy.css', 'r').read()
+        dummy_css = open(os.path.join(os.getcwd(), "data", "website", "dummy.css"), "r").read()
 
         # create a beautiful soup object
-        soup = BeautifulSoup(dummy_html, 'html.parser')
+        soup = BeautifulSoup(dummy_html, "html.parser")
 
         # set the title
-        soup.title.string = self.content.title
+        soup.title.string = "TALE"
 
         # add css to the html file
-        head = soup.find('head')
-        head.append(soup.new_tag('style', type='text/css'))
+        head = soup.find("head")
+        head.append(soup.new_tag("style", type="text/css"))
         head.style.append(dummy_css)
 
-        # set the first header
-        new_h1 = soup.new_tag('h1')
-        new_h1['class'] = 'fire'
-        new_h1.string = self.content.title
-        soup.find('div', {'class': 'content'}).append(new_h1)
+        # Find the placeholder div where new content will be added
+        new_content_div = soup.find("div", id="new-content")
 
-        # iterate over the texts, break them up after  two newlines in a row and add them as paragraphs to the div with class 'foreground' 
-        for text in self.content.text:
-            for paragraph in text.split('\n\n'):
-                new_div = soup.new_tag('div')
-                new_tag = soup.new_tag('p')
-                new_tag.string = paragraph
-                new_div.append(new_tag)
-                new_div['class'] = 'paragraph'
-                soup.find('div', {'class': 'foreground'}).append(new_div)
+        # regex
+        regex = re.findall(r"\(\d+\)", indexedStory)
 
+        last_index = 0
+        # using regular expressions find all occurences of (NUMERIC) in indexed story,
+        # add the part of the story before the occurence to the html file, add the image to the html file
+        for i in tqdm(range(len(regex)), desc="Generating HTML..."):
+            # find the index of the occurence
+            index = indexedStory.index(regex[i])
+
+            # Create a new 'div' for the content block
+            new_block = soup.new_tag(
+                "div", attrs={"class": "content-block", "id": f"block{i}"}
+            )
+
+            # Add an additional class for skew direction
+            skew_class = "skew-left" if i % 2 == 0 else "skew-right"
+            new_block["class"] = new_block.get("class", []) + [skew_class]
+
+            # Set the inline background image style for the new content block
+            new_block_style = f"""
+                background: url('{regex[i][1] + ".png"}') no-repeat center center;
+                background-size: cover;
+                """
+            new_block["style"] = new_block_style.strip()
+
+            # Create a new 'div' for text content
+            text_content = soup.new_tag("div", attrs={"class": "text-content"})
+            new_block.append(text_content)
+
+            # Create and append a new 'h2' tag to the text content
+            header = soup.new_tag("h2")
+            header.string = ""
+            text_content.append(header)
+
+            # Create and append a new 'p' tag to the text content
+            paragraph = soup.new_tag("p")
+            paragraph.string = indexedStory[last_index:index]
+
+            # if the index is not the last index of the list add also the part of the story after the occurence to the html file
+            if i == len(regex) - 1:
+                paragraph.string += indexedStory[index:]
+
+            # remove from paragraph string any occurence of (NUMERIC)
+            remove_regex = re.findall(r"\(\d+\)", paragraph.string)
+            for i in range(len(remove_regex)):
+                paragraph.string = paragraph.string.replace(remove_regex[i], "")
+
+            text_content.append(paragraph)
+            # Insert the new content block into the placeholder div
+            new_content_div.append(new_block)
+
+            last_index = index
+
+        new_content_div.unwrap()
         return soup.prettify()
-            
+
     def writeHtml(self, path, html):
         """
         Writes the html string into a file.
@@ -67,30 +103,23 @@ class PostProcessor:
             html (str) : The html string
         """
         # write the html string into a file
-        open(path, 'w', encoding='utf-8').write(html)
+        open(path, "w", encoding="utf-8").write(html)
         return
-    
-    def process(self, path):
+
+    def process(self, indexedStory):
         """
         Processes the content by generating a html and writing it into a file.
         """
-        html = self.generateHtml()
-        self.writeHtml(path + 'output.html', html)
+        html = self.generateHtml(indexedStory)
+        self.writeHtml(os.path.join(os.getcwd(), "data", "output", "output.html"), html)
         return
 
 
 # create a main function in order to test the class
 def __main__():
-    # create a content object
-    content = Content('', [''], [''])
-    content.loadFile('source//data//dummy//test1.json')
-
-    # create a post processor object
-    postProcessor = PostProcessor(content)
-    # process the content
-    postProcessor.process('source//data//output//')
     return
 
+
 # call the main function
-if __name__ == '__main__':
+if __name__ == "__main__":
     __main__()
