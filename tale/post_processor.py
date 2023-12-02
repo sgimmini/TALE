@@ -1,7 +1,7 @@
 from bs4 import BeautifulSoup
 import re
 from tqdm import tqdm
-
+import os
 
 class PostProcessor:
     """
@@ -20,9 +20,9 @@ class PostProcessor:
             html (str) : The html string
         """
         # read html structure from html file
-        dummy_html = open(".//data//website//dummy.html", "r").read()
+        dummy_html = open(os.path.join(os.getcwd(), "data", "website", "dummy.html"), "r").read()
         # read corresponding css file
-        dummy_css = open(".//data//website//dummy.css", "r").read()
+        dummy_css = open(os.path.join(os.getcwd(), "data", "website", "dummy.css"), "r").read()
 
         # create a beautiful soup object
         soup = BeautifulSoup(dummy_html, "html.parser")
@@ -111,7 +111,7 @@ class PostProcessor:
         Processes the content by generating a html and writing it into a file.
         """
         html = self.generateHtml(indexedStory)
-        self.writeHtml("data//output//" + "output.html", html)
+        self.writeHtml(os.path.join(os.getcwd(), "data", "output", "output.html"), html)
         return
 
 

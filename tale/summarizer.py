@@ -167,7 +167,6 @@ class Summarizer:
             If you would get an input like this:
 
             "STORY: Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.   
-                    Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. 
                     At vero eos et accusam et justo duo dolores et ea rebum.  Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
             PROMPTS:
             {
@@ -178,20 +177,13 @@ class Summarizer:
             The output should be a single string which contains the WHOLE story with the prompts inserted at the correct positions like this:
 
             "
-
             Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. 
-
             (1)
-
-            Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. 
-
-            (2)
-
             At vero eos et accusam et justo duo dolores et ea rebum.  Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
-
+            (2)
             "
 
-            Do not change any of the input texts but only move around positions. Only insert the number and not the full prompt by saying (number of prompt).
+            Only insert the number and not the full prompt by saying (number of prompt).
             Use all prompts exactly once. Do not leave any prompts out. Do not shorten or lengthen the texts and do not add any additional text. 
             Represent the prompts onlny through numbers in brackets. Do not use any other characters in the brackets.
             Do not include the word PROMPTS or STORY in the output.
@@ -200,7 +192,7 @@ class Summarizer:
         """
         user = "STORY: \n\n" + story + "\n\n PROMPTS: \n\n" + prompts
         response = self.sendPromptToGPT(
-            system=system, user=user, temperature=0.2, top_p=0.3
+            system=system, user=user, temperature=0.4, top_p=0.3
         )
         return response
 

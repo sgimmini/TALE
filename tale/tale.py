@@ -1,6 +1,7 @@
 from text2image import Text2Image
 from summarizer import Summarizer
 from post_processor import PostProcessor
+import os
 
 # main function
 if __name__ == "__main__":
@@ -10,29 +11,30 @@ if __name__ == "__main__":
     postProc = PostProcessor()
 
     # get prompts from the notes
-    prompts, indexedStory = summarizer.getPropmtsFromNotes("data//input//notes//")
+    prompts, indexedStory = summarizer.getPropmtsFromNotes(os.path.join(os.getcwd(), "data", "input", "notes"))
     # write the prompts to a json file
-    f = open("data//input//gpt_created_prompts.json", "w")
+    
+    f = open(os.path.join(os.getcwd(), "data", "input", "gpt_created_prompts.json"), "w")
     f.write(prompts)
     f.close()
 
     # read the prompts from a json file
-    f = open("data//input//gpt_created_prompts.json", "r")
+    f = open(os.path.join(os.getcwd(), "data", "input", "gpt_created_prompts.json"), "r")
     prompts = f.read()
     f.close()
 
     # write the indexed story to a file
-    f = open("data//input//indexed_story.txt", "w")
+    f = open(os.path.join(os.getcwd(), "data", "input", "indexed_story.txt"), "w")
     f.write(indexedStory)
     f.close()
 
     # read the indexed story from a file
-    f = open("data//input//indexed_story.txt", "r")
+    f = open(os.path.join(os.getcwd(), "data", "input", "indexed_story.txt"), "r")
     indexedStory = f.read()
     f.close()
 
     # generate images from the prompts
-    text2image.generateImages("data//input//gpt_created_prompts.json")
+    text2image.generateImages(os.path.join(os.getcwd(), "data", "input", "gpt_created_prompts.json"))
 
     # generate html file from the images
     postProc.process(indexedStory)

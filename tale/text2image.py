@@ -6,7 +6,7 @@ import base64
 import requests
 from PIL import Image
 from tqdm import tqdm
-
+import os
 
 class Text2Image:
     """
@@ -136,7 +136,8 @@ class Text2Image:
                 test_image = self.text2image_openai(prompt, "1792x1024")
                 if test_image is not None:
                     # save the image
-                    self.save_image_openai(test_image, "data//output//" + key + ".png")
+                    
+                    self.save_image_openai(test_image, os.path.join(os.getcwd(), "data", "output", key + ".png"))
                 pbar.update(1)
 
         return
