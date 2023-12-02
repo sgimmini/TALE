@@ -18,10 +18,9 @@ class Text2Image:
         self.pipe = None
         self.client = None
         client = None
-        
+
         is_openai = False
         is_diffusion = False
-
 
     def init_diffusion(self):
         """
@@ -29,11 +28,17 @@ class Text2Image:
         :return: None
         """
         device = "cuda"
-        self.pipe = DiffusionPipeline.from_pretrained("runwayml/stable-diffusion-v1-5", torch_dtype=torch.float16).to(device)
-        self.pipe.safety_checker =  None
-        self.pipe.scheduler = KDPM2AncestralDiscreteScheduler.from_config(self.pipe.scheduler.config, rescale_betas_zero_snr=True, timestep_spacing="trailing")
+        self.pipe = DiffusionPipeline.from_pretrained(
+            "runwayml/stable-diffusion-v1-5", torch_dtype=torch.float16
+        ).to(device)
+        self.pipe.safety_checker = None
+        self.pipe.scheduler = KDPM2AncestralDiscreteScheduler.from_config(
+            self.pipe.scheduler.config,
+            rescale_betas_zero_snr=True,
+            timestep_spacing="trailing",
+        )
         return
-    
+
     def init_openai(self):
         """
         This function initializes the openai api.
@@ -51,14 +56,19 @@ class Text2Image:
         :param prompt: a string of text
         :return: an image
         """
-        
+
         if self.pipe is None:
             self.init_diffusion()
-        
-        generator = torch.Generator().manual_seed(42)
-        generated_image = self.pipe(prompt, height=resolution, width=resolution, num_inference_steps=num_steps, generator=generator).images[0]
-        return generated_image
 
+        generator = torch.Generator().manual_seed(42)
+        generated_image = self.pipe(
+            prompt,
+            height=resolution,
+            width=resolution,
+            num_inference_steps=num_steps,
+            generator=generator,
+        ).images[0]
+        return generated_image
 
     def save_image(self, image, path):
         """
@@ -69,14 +79,14 @@ class Text2Image:
         # save the image
         image.save(path)
         return
-    
+
     def text2image_openai(self, prompt, resolution="1024x1024"):
         """
         This function takes a prompt as input and returns an image as output.
         :param prompt: a string of text
         :return: an image
         """
-        
+
         if self.client is None:
             self.init_openai()
         try:
@@ -91,7 +101,7 @@ class Text2Image:
         except openai.BadRequestError as e:
             print(e)
             return None
-    
+
     def save_image_openai(self, image, path):
         """
         This function takes an image as input and saves it to a file.
@@ -99,26 +109,26 @@ class Text2Image:
         :return: None
         """
         # get response
-        response = requests.get(image , stream=True)
-        
+        response = requests.get(image, stream=True)
+
         # save response as png
-        with open(path, 'wb') as file:
+        with open(path, "wb") as file:
             file.write(response.content)
-            
+
         # save the image
         # img = Image.open(response.raw)
-        
+
         # save the image
-        
+
     def generateImages(self, prompt_path: str):
         """This function takes a list of prompts as input and returns a list of images as output"""
         # generate the images
         # open a json file and load the content
         processor = pre_processor.PreProcessor()
-    
+
         # load the content
         content = processor.load_json(prompt_path)
-        
+
         with tqdm(total=len(content), desc="Generating Images...") as pbar:
             for key, value in content.items():
                 prompt = value
@@ -128,20 +138,20 @@ class Text2Image:
                     # save the image
                     self.save_image_openai(test_image, "data//output//" + key + ".png")
                 pbar.update(1)
-                
-        return 
-        
+
+        return
+
 
 if __name__ == "__main__":
     # create an instance of the class
     text2image = Text2Image()
-    
+
     # open a json file and load the content
     processor = pre_processor.PreProcessor()
-    
+
     # load the content
     content = processor.load_json("data//input//gpt_created_prompts.json")
-    
+
     # iterate over content, take the value and use it as prompt
     for key, value in content.items():
         TEST_PROMPT = value
