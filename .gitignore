@@ -166,3 +166,6 @@ secret.json
 secret.txt
 ```
 secret.txt
+
+# uploaded files in tale_web
+tale_web/media/uploads
