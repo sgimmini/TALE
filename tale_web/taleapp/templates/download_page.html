@@ -1,0 +1,23 @@
+<!-- download_page.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Download Page</title>
+</head>
+<body>
+    <h1>Download Uploaded Files</h1>
+    <form action="{% url 'download_selected_files' %}" method="post">
+        {% csrf_token %}
+        <h2>Select files to download:</h2>
+        <ul>
+            {% for file in files %}
+            <li>
+                <input type="checkbox" name="selected_files" value="{{ file.id }}">
+                <label>{{ file.file.name }}</label>
+            </li>
+            {% endfor %}
+        </ul>
+        <button type="submit">Download Selected Files</button>
+    </form>
+</body>
+</html>
