@@ -3,8 +3,8 @@ from summarizer import Summarizer
 from post_processor import PostProcessor
 import os
 
-# main function
-if __name__ == "__main__":
+
+def runPipeline():
     # create an instance of the class
     text2image = Text2Image()
     summarizer = Summarizer()
@@ -13,7 +13,6 @@ if __name__ == "__main__":
     # get prompts from the notes
     prompts, indexedStory = summarizer.getPropmtsFromNotes(os.path.join(os.getcwd(), "data", "input", "notes"))
     # write the prompts to a json file
-    
     f = open(os.path.join(os.getcwd(), "data", "input", "gpt_created_prompts.json"), "w")
     f.write(prompts)
     f.close()
@@ -38,3 +37,7 @@ if __name__ == "__main__":
 
     # generate html file from the images
     postProc.process(indexedStory)
+
+# main function
+if __name__ == "__main__":
+    runPipeline()
