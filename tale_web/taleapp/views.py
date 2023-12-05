@@ -15,6 +15,33 @@ ZIP_FILE_PATH = os.path.join(MEDIA_ROOT, 'zips', 'ouput.zip')  # Define the path
 def front_page(request):
     return render(request, 'front_page.html')
 
+def serve_dynamic_image(request, output_folder, image_name):
+    # Construct the path to the image based on the output_folder provided
+    image_path = os.path.join(OUTPUT_DIR, output_folder, image_name)
+
+    try:
+        with open(image_path, 'rb') as img_file:
+            return HttpResponse(img_file.read(), content_type='image/png')  # Adjust content_type based on your image type
+    except FileNotFoundError:
+        # Handle case when image is not found
+        return HttpResponse('Image not found', status=404)
+
+def render_html_file(request, output_folder):
+    if request.method == 'POST':
+        # Perform the logic to retrieve the HTML file based on output_folder from the POST request or any other method
+        html_file_path = os.path.join(OUTPUT_DIR, output_folder, 'output.html') 
+        with open(html_file_path, 'r') as html_file:
+            file_content = html_file.read()
+        return HttpResponse(file_content, content_type='text/html')
+    else:
+        return HttpResponse("Invalid request")
+
+def display_output(request):
+    # get all the folders in the output directory
+    folders = [folder for folder in os.listdir(OUTPUT_DIR) if os.path.isdir(os.path.join(OUTPUT_DIR, folder))]
+    context = {'folders': folders}
+    return render(request, 'display_outputs.html', context)
+
 def show_list_of_files2process(request):
     # Shows a list of uploaded files
     uploaded_files = UploadFile.objects.all()

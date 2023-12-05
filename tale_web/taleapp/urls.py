@@ -9,5 +9,8 @@ urlpatterns = [
     path('file_process/', views.show_list_of_files2process, name='file_process'),
     path('_file_process/<int:file_id>/', views.process_file, name='_file_process'),
     path('download_outputs/', views.download_all_outputs, name='download_all_outputs'),
+    path('display_outputs/', views.display_output, name='display_outputs'),
+    path('render_html_file/<str:output_folder>/', views.render_html_file, name='render_html_file'),
+    path('render_html_file/<str:output_folder>/<str:image_name>/', views.serve_dynamic_image, name='serve_dynamic_image'),
 
 ]
