@@ -6,4 +6,8 @@ urlpatterns = [
     path('calculation/', views.calculation_view, name='calculation'),
     path('upload_file/', views.upload_file_view, name='upload_file'),
     path('download_selected/', views.download_selected_files, name='download_selected_files'),
+    path('file_process/', views.show_list_of_files2process, name='file_process'),
+    path('_file_process/<int:file_id>/', views.process_file, name='_file_process'),
+    path('download_outputs/', views.download_all_outputs, name='download_all_outputs'),
+
 ]
