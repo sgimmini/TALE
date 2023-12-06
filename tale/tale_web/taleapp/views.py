@@ -1,4 +1,4 @@
-from tale.tale import runPipeline
+from tale import runPipeline
 import os
 from django.http import HttpResponse
 from django.shortcuts import render
@@ -56,16 +56,9 @@ def process_file(request, file_id):
     # Assuming the script takes the input file and generates an output file
     input_file_path = selected_file.file.path  # Path to the selected input file
     os.makedirs(OUTPUT_DIR, exist_ok=True)
-
-    # Run your Python script or process the input file to generate output
-    # Replace this with your actual Python script logic
-    output_file_path = os.path.join(OUTPUT_DIR, 'output.txt')
-    with open(output_file_path, 'w') as output_file:
-        # Perform processing using the input file (input_file_path)
-        # For example:
-        output_file.write(f"Processed content from {selected_file.file.name}")
-        
-    runPipeline()
+    
+    # run the tale pipeline on uploaded file     
+    runPipeline(input_file_path)
 
     return render(request, 'processing_success.html')  # Display a success page or redirect elsewhere
 
