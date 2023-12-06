@@ -1,0 +1,29 @@
+{"box_info": {
+ "hardware_id": 259,
+ "hardware_revision": 32,
+ "product_name": "FRITZ!Box 7590 AX",
+ "maca": "485D35B93FBE",
+ "serial": "R01483530439912",
+ "oem": "avm",
+ "major": 259,
+ "minor": 7,
+ "patch": 57,
+ "buildnumber": 107809,
+ "buildtype": 1,
+ "language": "de",
+ "country": "DE",
+ "time_zone": "+01:00",
+ "calling_code": "+49",
+ "provider_key": "1und1",
+ "provider_name": "1&1 Telecom GmbH",
+ "annex": "B",
+ "update_config": 3,
+ "flags": [
+  "crashreport",
+  "prov_acs",
+  "avm_acs",
+  "medium_dsl",
+  "mesh_master_no_trusted"
+ ]
+}
+}
