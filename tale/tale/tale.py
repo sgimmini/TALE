@@ -1,6 +1,6 @@
-from text2image import Text2Image
-from summarizer import Summarizer
-from post_processor import PostProcessor
+from .text2image import Text2Image
+from .summarizer import Summarizer
+from .post_processor import PostProcessor
 import os
 
 

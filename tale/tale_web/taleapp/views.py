@@ -1,3 +1,4 @@
+from tale.tale import runPipeline
 import os
 from django.http import HttpResponse
 from django.shortcuts import render
@@ -6,7 +7,6 @@ from .forms import CalculationForm, UploadFileForm
 from tale_web.settings import MEDIA_ROOT
 import zipfile
 from .models import UploadFile
-import tale
 
 OUTPUT_DIR = os.path.join(MEDIA_ROOT, 'outputs')
 # Create a ZIP archive with the selected files
@@ -65,7 +65,7 @@ def process_file(request, file_id):
         # For example:
         output_file.write(f"Processed content from {selected_file.file.name}")
         
-    #tale.runPipeline()
+    runPipeline()
 
     return render(request, 'processing_success.html')  # Display a success page or redirect elsewhere
 
