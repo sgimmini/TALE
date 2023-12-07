@@ -6,7 +6,7 @@ Pillow==10.1.0
 pydantic==2.5.2
 Requests==2.31.0
 source==1.2.0
-torch==2.11.1+cu118
+torch==2.11.1
 tqdm==4.65.0
 transformers==4.31.0
 uvicorn==0.24.0.post1
