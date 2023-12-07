@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Select File to Process</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <h1>Select File to Process</h1>
+    <form id="processForm" method="post">
+        {% csrf_token %}
+        <label for="file_dropdown">Select a file:</label>
+        <select name="selected_file" id="file_dropdown">
+            {% for file in uploaded_files %}
+                <option value="{{ file.id }}">{{ file.file.name }}</option>
+            {% endfor %}
+        </select>
+        <br><br>
+        <button type="submit">Process</button>
+    </form>
+
+    <script>
+        $(document).ready(function() {
+            $('#processForm').on('submit', function(e) {
+                e.preventDefault(); // Prevent the default form submission
+                
+                var selectedFileId = $('#file_dropdown').val(); // Get the selected file ID
+                var formAction = "{% url '_file_process' file_id=0 %}".replace('0', selectedFileId);
+                // Update the form action with the selected file ID
+                $(this).attr('action', formAction);
+                this.submit(); // Submit the form with the updated action
+            });
+        });
+    </script>
+</body>
+</html>

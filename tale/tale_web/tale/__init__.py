@@ -1,0 +1,1 @@
+from .tale import runPipeline

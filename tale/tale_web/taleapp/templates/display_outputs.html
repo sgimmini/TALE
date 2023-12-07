@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Display Output</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <h1>Select Folder to Display</h1>
+    <form id="outputForm" action="" method="post" target="_blank">
+        {% csrf_token %}
+        <label for="folder_dropdown">Select a folder:</label>
+        <select name="selected_folder" id="folder_dropdown">
+            {% for folder in folders %}
+                <option value="{{ folder }}">{{ folder }}</option>
+            {% endfor %}
+        </select>
+        <br><br>
+        <button type="button" id="displayButton">Display HTML</button>
+    </form>
+
+    <script>
+        $(document).ready(function() {
+            $('#displayButton').on('click', function(e) {
+                e.preventDefault(); // Prevent the default button behavior
+
+                var selectedFolder = $('#folder_dropdown').val(); // Get the selected folder
+                var formAction = "{% url 'render_html_file' output_folder=0 %}".replace('0', selectedFolder);
+                $('#outputForm').attr('action', formAction); // Update the form action
+                $('#outputForm').submit(); // Submit the form
+            });
+        });
+    </script>
+</body>
+</html>
