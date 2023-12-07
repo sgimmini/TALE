@@ -155,7 +155,7 @@ class Summarizer:
         processor = PreProcessor()
         
         # load context django conform
-        context = processor.load_json(os.path.join(os.path.dirname(__file__),"data", "input", "context.json"))
+        context = processor.load_json(os.path.join(os.path.dirname(__file__), "..", "media", "uploads", "context.json"))
 
         # clean the prompt by substituting names which are keys in context.json with their values
         for key in context:

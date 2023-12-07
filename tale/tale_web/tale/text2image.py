@@ -142,24 +142,3 @@ class Text2Image:
                 pbar.update(1)
 
         return
-
-
-if __name__ == "__main__":
-    # create an instance of the class
-    text2image = Text2Image()
-
-    # open a json file and load the content
-    processor = pre_processor.PreProcessor()
-
-    # load the content
-    content = processor.load_json("data//input//gpt_created_prompts.json")
-
-    # iterate over content, take the value and use it as prompt
-    for key, value in content.items():
-        TEST_PROMPT = value
-        # generate the image
-        # test_image = text2image.text2image(TEST_PROMPT, 30, 1024)
-        test_image = text2image.text2image_openai(TEST_PROMPT, "1024x1024")
-
-        # save the image
-        text2image.save_image_openai(test_image, "data//output//" + key + ".png")
