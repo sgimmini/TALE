@@ -155,7 +155,7 @@ class Summarizer:
         processor = PreProcessor()
         
         # load context django conform
-        context = processor.load_json(os.path.join(os.path.dirname(__file__), "..", "media", "uploads", "context.json"))
+        context = processor.load_json(os.path.join(os.path.dirname(__file__), ".", "media", "uploads", "context.json"))
 
         # clean the prompt by substituting names which are keys in context.json with their values
         for key in context:
@@ -235,14 +235,3 @@ class Summarizer:
             pbar.update(1)
 
         return prompts, indexedNotes
-
-
-if __name__ == "__main__":
-    summarizer = Summarizer()
-    notes = summarizer.readNotesFromPath("data//input//the_sprawl//")
-
-    pre_summary = summarizer.preSummary(notes)
-    summary = summarizer.summarizePreSummaries(pre_summary)
-    prompts = summarizer.createPromptFromSummaries(summary)
-
-    print(prompts)

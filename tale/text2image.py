@@ -137,7 +137,7 @@ class Text2Image:
                 if test_image is not None:
                     # save the image
                     
-                    self.save_image_openai(test_image, os.path.join(os.path.dirname(__file__), "..",
+                    self.save_image_openai(test_image, os.path.join(os.path.dirname(__file__), ".",
                                                                     "media", "outputs", outpath, key + ".png"))
                 pbar.update(1)
 

@@ -15,8 +15,8 @@ def runPipeline(file : str):
     id = str(id)
     
     # create directory for output if not exists
-    if not os.path.exists(os.path.join(os.path.dirname(__file__), "..", "media", "outputs", id)):
-        os.makedirs(os.path.join(os.path.dirname(__file__), "..", "media", "outputs", id))
+    if not os.path.exists(os.path.join(os.path.dirname(__file__), ".", "media", "outputs", id)):
+        os.makedirs(os.path.join(os.path.dirname(__file__), ".", "media", "outputs", id))
     
     # get prompts from the notes
     prompts, indexedStory = summarizer.getPropmtsFromNotes(file)
