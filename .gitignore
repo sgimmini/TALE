@@ -161,11 +161,7 @@ cython_debug/
 
 *.DS_Store
 
-# secret file
-secret.json
-secret.txt
-```
-secret.txt
-
 # uploaded files in tale_web
 tale_web/media/
+
+secret.text
