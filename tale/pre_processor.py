@@ -26,6 +26,8 @@ class PreProcessor(BaseModel):
         for filename in files:
             if filename.endswith(".txt"):
                 txt_files.append(directory + "/" + filename)
+                
+        txt_files.sort()
 
         return txt_files
 
