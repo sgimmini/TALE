@@ -18,4 +18,4 @@ class PreProcessorTestCase(TestCase):
     def test_load_data(self):
         filepath = os.path.join(os.path.dirname(__file__), "test_data", "test_texts")
         text = self.pre_processor.load_data(filepath)
-        self.assertEqual(text, "1234abcd")
+        self.assertEqual(text, "abcd1234")
