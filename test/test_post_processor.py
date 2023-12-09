@@ -8,7 +8,7 @@ class PostProcessorTestCase(TestCase):
     
     # write html
     def test_write_html(self):
-        path = os.path.join(os.path.dirname(__file__), "test_data", "test_texts")
+        path = os.path.join(os.path.dirname(__file__), "test_data", "test_texts", "test.html")
         html = "<html><body><p>test</p></body></html>"
         self.post_processor.writeHtml(path, html)
         self.assertEqual(open(path, "r", encoding="utf-8").read(), html)
