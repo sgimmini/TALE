@@ -15,5 +15,5 @@ class PostProcessorTestCase(TestCase):
         
     # teardown
     def tearDown(self):
-        path = os.path.join(os.path.dirname(__file__), "test_data", "test_texts")
+        path = os.path.join(os.path.dirname(__file__), "test_data", "test_texts", "test.html")
         os.remove(path)
