@@ -9,19 +9,19 @@ class SummarizerTestCase(TestCase):
     # read notes from path
     def test_read_notes(self):
         path = os.path.join(os.path.dirname(__file__), "test_data", "test_texts")
-        notes = self.summarizer.read_notes(path)
+        notes = self.summarizer.readNotesFromPath(path)
         self.assertEqual(len(notes), 2)
         
     # read notes from empty path
     def test_read_notes_empty(self):
         path = os.path.join(os.path.dirname(__file__), "test_data", "test_texts_empty")
-        notes = self.summarizer.read_notes(path)
+        notes = self.summarizer.readNotesFromPath(path)
         self.assertEqual(len(notes), 0)
         
     # def read notes single file
     def test_read_notes_single_file(self):
         path = os.path.join(os.path.dirname(__file__), "test_data", "test_texts", "test.txt")
-        notes = self.summarizer.read_notes(path)
+        notes = self.summarizer.readNotesFromPath(path)
         self.assertEqual(len(notes), 1)
         
     
