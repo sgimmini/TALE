@@ -4,7 +4,7 @@ from tale import summarizer
 
 class SummarizerTestCase(TestCase):
     def setUp(self):
-        self.summarizer = summarizer.Summarizer()
+        self.summarizer = summarizer.Summarizer(None)
     
     # read notes from path
     def test_read_notes(self):
@@ -17,6 +17,14 @@ class SummarizerTestCase(TestCase):
         path = os.path.join(os.path.dirname(__file__), "test_data", "test_texts_empty")
         notes = self.summarizer.read_notes(path)
         self.assertEqual(len(notes), 0)
+        
+    # def read notes single file
+    def test_read_notes_single_file(self):
+        path = os.path.join(os.path.dirname(__file__), "test_data", "test_texts", "test.txt")
+        notes = self.summarizer.read_notes(path)
+        self.assertEqual(len(notes), 1)
+        
+    
     
     # teardown
     def tearDown(self):

@@ -19,3 +19,23 @@ class PreProcessorTestCase(TestCase):
         filepath = os.path.join(os.path.dirname(__file__), "test_data", "test_texts")
         text = self.pre_processor.load_data(filepath)
         self.assertEqual(text, "abcd1234")
+        
+    # def parse textfile
+    def test_parse_textfile(self):
+        filepath = os.path.join(os.path.dirname(__file__), "test_data", "test_texts", "test.txt")
+        text = self.pre_processor.parse_textfile(filepath)
+        self.assertEqual(text, "abcd")
+        
+    # def parse textfile wrong file
+    def test_parse_textfile_wrong_file(self):
+        filepath = os.path.join(os.path.dirname(__file__), "test_data", "test_texts", "test.yaml")
+        with self.assertRaises(ValueError):
+            self.pre_processor.parse_textfile(filepath)
+            
+    # def load json
+    def test_load_json(self):
+        filepath = os.path.join(os.path.dirname(__file__), "test_data", "test_texts", "test.json")
+        text = self.pre_processor.load_json(filepath)
+        self.assertEqual(text["test"], "123")
+        
+        

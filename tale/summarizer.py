@@ -14,6 +14,13 @@ class Summarizer:
         self.client = None
         self.init_openai()
         return
+    
+    # additional contrustor for testing
+    def __init__(self, client):
+        """This function initializes the class"""
+        # initialize the class
+        self.client = client
+        return
 
     def init_openai(self):
         """This function initializes the openai client"""
