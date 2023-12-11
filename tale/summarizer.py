@@ -51,14 +51,6 @@ class Summarizer:
 
         return response
 
-    def preSummary(self, texts):
-        """This function takes a list of notes as input and returns a single string as output"""
-        # create a single string
-        summaries = []
-        for text in texts:
-            summaries.append(self.summarize(text))
-        return summaries
-
     def summarizePreSummaries(self, summaries):
         """This function takes a list of summaries as input and returns a single string as output"""
         model_input = ""
@@ -214,12 +206,8 @@ class Summarizer:
             notes = self.readNotesFromPath(path)
             pbar.update(1)
 
-            pbar.set_description("Summarizing notes...")
-            pre_summary = self.preSummary(notes)
-            pbar.update(1)
-
             pbar.set_description("Summarizing summaries...")
-            summary = self.summarizePreSummaries(pre_summary)
+            summary = self.summarizePreSummaries(notes)
             pbar.update(1)
 
             pbar.set_description("Creating prompts...")
