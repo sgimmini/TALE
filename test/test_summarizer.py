@@ -20,7 +20,7 @@ class SummarizerTestCase(TestCase):
         
     # def read notes single file
     def test_read_notes_single_file(self):
-        path = os.path.join(os.path.dirname(__file__), "test_data", "test_texts", "test.txt")
+        path = os.path.join(os.path.dirname(__file__), "test_data", "test_texts", "test1.txt")
         notes = self.summarizer.readNotesFromPath(path)
         self.assertEqual(len(notes), 1)
         
