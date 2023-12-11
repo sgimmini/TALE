@@ -22,7 +22,7 @@ class PreProcessorTestCase(TestCase):
         
     # def parse textfile
     def test_parse_textfile(self):
-        filepath = os.path.join(os.path.dirname(__file__), "test_data", "test_texts", "test.txt")
+        filepath = os.path.join(os.path.dirname(__file__), "test_data", "test_texts", "test1.txt")
         text = self.pre_processor.parse_textfile(filepath)
         self.assertEqual(text, "abcd")
         
