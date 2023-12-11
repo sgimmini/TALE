@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>File Upload</title>
+</head>
+<body>
+    <h2>Upload a .txt File</h2>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Upload</button>
+    </form>
+    <h2>Options:</h2>
+    <ul>
+        <li><a href="{% url 'front_page' %}">Front Page</a></li>
+        <!-- Add other options as needed -->
+    </ul>
+</body>
+</html>

@@ -1,7 +1,7 @@
 import os
 import openai
 from openai import OpenAI
-from pre_processor import PreProcessor
+from .pre_processor import PreProcessor
 from tqdm import tqdm
 
 
@@ -24,11 +24,18 @@ class Summarizer:
 
     def readNotesFromPath(self, path):
         texts = []
-        # read all .txt files from the path
-        for file in os.listdir(path):
-            if file.endswith(".txt"):
-                with open(os.path.join(path, file), "r", encoding="utf8") as f:
-                    texts.append(f.read())
+        
+        # if path is directory
+        if os.path.isdir(path):  
+            # read all .txt files from the path
+            for file in os.listdir(path):
+                if file.endswith(".txt"):
+                    with open(os.path.join(path, file), "r", encoding="utf8") as f:
+                        texts.append(f.read())
+        else:
+            # read the file
+            with open(path, "r", encoding="utf8") as f:
+                texts.append(f.read())
         return texts
 
     def summarize(self, text):
@@ -146,7 +153,9 @@ class Summarizer:
         """This function takes a string as input and returns a string as output"""
         # load context.json
         processor = PreProcessor()
-        context = processor.load_json("data//input//context.json")
+        
+        # load context django conform
+        context = processor.load_json(os.path.join(os.path.dirname(__file__), ".", "media", "uploads", "context.json"))
 
         # clean the prompt by substituting names which are keys in context.json with their values
         for key in context:
@@ -226,14 +235,3 @@ class Summarizer:
             pbar.update(1)
 
         return prompts, indexedNotes
-
-
-if __name__ == "__main__":
-    summarizer = Summarizer()
-    notes = summarizer.readNotesFromPath("data//input//the_sprawl//")
-
-    pre_summary = summarizer.preSummary(notes)
-    summary = summarizer.summarizePreSummaries(pre_summary)
-    prompts = summarizer.createPromptFromSummaries(summary)
-
-    print(prompts)
