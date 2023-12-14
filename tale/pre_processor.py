@@ -88,3 +88,14 @@ class PreProcessor(BaseModel):
             # if the filepth is a valid json string
             output = json.loads(filepath)
         return output
+
+    
+    def write_file(self, text: str, filepath: str) -> None:
+        """
+        Write text to file.
+
+        :param text: text to be written to file
+        :param filepath: path to file
+        """
+        with open(filepath, "w", encoding="UTF-8") as file:
+            file.write(text)
