@@ -26,6 +26,8 @@ class PreProcessor(BaseModel):
         for filename in files:
             if filename.endswith(".txt"):
                 txt_files.append(directory + "/" + filename)
+                
+        txt_files.sort()
 
         return txt_files
 
@@ -77,11 +79,12 @@ class PreProcessor(BaseModel):
         """
         Loads json from filepath.
         """
-        if not filepath.endswith(".json"):
-            raise ValueError("File must be a .json file.")
-
-        # load json file
-        with open(filepath, "r", encoding="UTF-8") as json_file:
-            output = json.load(json_file)
-
+        
+        # if the filepath is a file
+        if os.path.isfile(filepath):
+            with open(filepath, "r", encoding="UTF-8") as json_file:
+                output = json.load(json_file)
+        else:
+            # if the filepth is a valid json string
+            output = json.loads(filepath)
         return output

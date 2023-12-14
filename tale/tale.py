@@ -1,40 +1,32 @@
-from text2image import Text2Image
-from summarizer import Summarizer
-from post_processor import PostProcessor
+from .text2image import Text2Image
+from .summarizer import Summarizer
+from .post_processor import PostProcessor
 import os
+import random
 
-# main function
-if __name__ == "__main__":
+def runPipeline(file : str):
     # create an instance of the class
     text2image = Text2Image()
     summarizer = Summarizer()
     postProc = PostProcessor()
 
-    # get prompts from the notes
-    prompts, indexedStory = summarizer.getPropmtsFromNotes(os.path.join(os.getcwd(), "data", "input", "notes"))
-    # write the prompts to a json file
+    # create random id
+    id = random.randint(0, 1000000000)
+    id = str(id)
     
-    f = open(os.path.join(os.getcwd(), "data", "input", "gpt_created_prompts.json"), "w")
-    f.write(prompts)
-    f.close()
-
-    # read the prompts from a json file
-    f = open(os.path.join(os.getcwd(), "data", "input", "gpt_created_prompts.json"), "r")
-    prompts = f.read()
-    f.close()
-
-    # write the indexed story to a file
-    f = open(os.path.join(os.getcwd(), "data", "input", "indexed_story.txt"), "w")
-    f.write(indexedStory)
-    f.close()
-
-    # read the indexed story from a file
-    f = open(os.path.join(os.getcwd(), "data", "input", "indexed_story.txt"), "r")
-    indexedStory = f.read()
-    f.close()
+    # create directory for output if not exists
+    if not os.path.exists(os.path.join(os.path.dirname(__file__), ".", "media", "outputs", id)):
+        os.makedirs(os.path.join(os.path.dirname(__file__), ".", "media", "outputs", id))
+    
+    # get prompts from the notes
+    prompts, indexedStory = summarizer.getPropmtsFromNotes(file)
 
     # generate images from the prompts
-    text2image.generateImages(os.path.join(os.getcwd(), "data", "input", "gpt_created_prompts.json"))
+    text2image.generateImages(prompts, id)
 
     # generate html file from the images
-    postProc.process(indexedStory)
+    postProc.process(indexedStory, id)
+
+# main function
+if __name__ == "__main__":
+    runPipeline()

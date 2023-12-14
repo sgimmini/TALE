@@ -1,6 +1,6 @@
 from diffusers import DiffusionPipeline, DDIMScheduler, KDPM2AncestralDiscreteScheduler
 import torch
-import pre_processor
+from .pre_processor import PreProcessor
 from openai import OpenAI
 import base64
 import requests
@@ -120,11 +120,11 @@ class Text2Image:
 
         # save the image
 
-    def generateImages(self, prompt_path: str):
+    def generateImages(self, prompt_path: str, outpath: str):
         """This function takes a list of prompts as input and returns a list of images as output"""
         # generate the images
         # open a json file and load the content
-        processor = pre_processor.PreProcessor()
+        processor = PreProcessor()
 
         # load the content
         content = processor.load_json(prompt_path)
@@ -137,28 +137,8 @@ class Text2Image:
                 if test_image is not None:
                     # save the image
                     
-                    self.save_image_openai(test_image, os.path.join(os.getcwd(), "data", "output", key + ".png"))
+                    self.save_image_openai(test_image, os.path.join(os.path.dirname(__file__), ".",
+                                                                    "media", "outputs", outpath, key + ".png"))
                 pbar.update(1)
 
         return
-
-
-if __name__ == "__main__":
-    # create an instance of the class
-    text2image = Text2Image()
-
-    # open a json file and load the content
-    processor = pre_processor.PreProcessor()
-
-    # load the content
-    content = processor.load_json("data//input//gpt_created_prompts.json")
-
-    # iterate over content, take the value and use it as prompt
-    for key, value in content.items():
-        TEST_PROMPT = value
-        # generate the image
-        # test_image = text2image.text2image(TEST_PROMPT, 30, 1024)
-        test_image = text2image.text2image_openai(TEST_PROMPT, "1024x1024")
-
-        # save the image
-        text2image.save_image_openai(test_image, "data//output//" + key + ".png")

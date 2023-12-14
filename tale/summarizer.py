@@ -1,7 +1,7 @@
 import os
 import openai
 from openai import OpenAI
-from pre_processor import PreProcessor
+from .pre_processor import PreProcessor
 from tqdm import tqdm
 
 
@@ -14,6 +14,13 @@ class Summarizer:
         self.client = None
         self.init_openai()
         return
+    
+    # additional contrustor for testing
+    def __init__(self, client):
+        """This function initializes the class"""
+        # initialize the class
+        self.client = client
+        return
 
     def init_openai(self):
         """This function initializes the openai client"""
@@ -24,11 +31,18 @@ class Summarizer:
 
     def readNotesFromPath(self, path):
         texts = []
-        # read all .txt files from the path
-        for file in os.listdir(path):
-            if file.endswith(".txt"):
-                with open(os.path.join(path, file), "r", encoding="utf8") as f:
-                    texts.append(f.read())
+        
+        # if path is directory
+        if os.path.isdir(path):  
+            # read all .txt files from the path
+            for file in os.listdir(path):
+                if file.endswith(".txt"):
+                    with open(os.path.join(path, file), "r", encoding="utf8") as f:
+                        texts.append(f.read())
+        else:
+            # read the file
+            with open(path, "r", encoding="utf8") as f:
+                texts.append(f.read())
         return texts
 
     def summarize(self, text):
@@ -43,14 +57,6 @@ class Summarizer:
         )
 
         return response
-
-    def preSummary(self, texts):
-        """This function takes a list of notes as input and returns a single string as output"""
-        # create a single string
-        summaries = []
-        for text in texts:
-            summaries.append(self.summarize(text))
-        return summaries
 
     def summarizePreSummaries(self, summaries):
         """This function takes a list of summaries as input and returns a single string as output"""
@@ -146,7 +152,9 @@ class Summarizer:
         """This function takes a string as input and returns a string as output"""
         # load context.json
         processor = PreProcessor()
-        context = processor.load_json("data//input//context.json")
+        
+        # load context django conform
+        context = processor.load_json(os.path.join(os.path.dirname(__file__), ".", "media", "uploads", "context.json"))
 
         # clean the prompt by substituting names which are keys in context.json with their values
         for key in context:
@@ -205,12 +213,8 @@ class Summarizer:
             notes = self.readNotesFromPath(path)
             pbar.update(1)
 
-            pbar.set_description("Summarizing notes...")
-            pre_summary = self.preSummary(notes)
-            pbar.update(1)
-
             pbar.set_description("Summarizing summaries...")
-            summary = self.summarizePreSummaries(pre_summary)
+            summary = self.summarizePreSummaries(notes)
             pbar.update(1)
 
             pbar.set_description("Creating prompts...")
@@ -226,14 +230,3 @@ class Summarizer:
             pbar.update(1)
 
         return prompts, indexedNotes
-
-
-if __name__ == "__main__":
-    summarizer = Summarizer()
-    notes = summarizer.readNotesFromPath("data//input//the_sprawl//")
-
-    pre_summary = summarizer.preSummary(notes)
-    summary = summarizer.summarizePreSummaries(pre_summary)
-    prompts = summarizer.createPromptFromSummaries(summary)
-
-    print(prompts)
