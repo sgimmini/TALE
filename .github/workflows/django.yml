@@ -1,7 +1,8 @@
 name: Django CI
 
 on:
-  push
+  push:
+    branches: ["any"]
   pull_request:
     branches: [ "main", "dev" ]
 
