@@ -8,5 +8,5 @@ Pillow==10.1.0
 pydantic==2.5.2
 Requests==2.31.0
 spacy==3.7.2
-torch==2.1.1+cu118
+torch
 tqdm==4.65.0
