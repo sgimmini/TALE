@@ -12,5 +12,6 @@ urlpatterns = [
     path('display_outputs/', views.display_output, name='display_outputs'),
     path('render_html_file/<str:output_folder>/', views.render_html_file, name='render_html_file'),
     path('render_html_file/<str:output_folder>/<str:image_name>/', views.serve_dynamic_image, name='serve_dynamic_image'),
-
+    path('edit_context/', views.edit_context, name='edit_context'),
+    path('edit_context/json_data_view', views.json_data_view, name='json_data_view'),
 ]

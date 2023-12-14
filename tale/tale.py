@@ -3,6 +3,7 @@ from .summarizer import Summarizer
 from .post_processor import PostProcessor
 import os
 import random
+from .context_manager import ContextManager
 
 def runPipeline(file : str):
     # create an instance of the class
@@ -26,6 +27,16 @@ def runPipeline(file : str):
 
     # generate html file from the images
     postProc.process(indexedStory, id)
+    
+def runEntityExtraction(file : str):
+    # create an instance of the class
+    contextManager = ContextManager()
+
+    # get entities from the notes
+    entities = contextManager.get_entities(file)
+
+    # write entities to context.json
+    contextManager.write_entities(entities)
 
 # main function
 if __name__ == "__main__":

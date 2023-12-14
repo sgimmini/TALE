@@ -1,12 +1,13 @@
 from tale import runPipeline
 import os
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
+import json
 from django.shortcuts import render
-from django.http import HttpResponse
 from .forms import CalculationForm, UploadFileForm
 from tale_web.settings import MEDIA_ROOT
 import zipfile
 from .models import UploadFile
+
 
 OUTPUT_DIR = os.path.join(MEDIA_ROOT, 'outputs')
 # Create a ZIP archive with the selected files
@@ -127,6 +128,19 @@ def download_selected_files(request):
 
         return response
     return render(request, 'download_page.html', {'files': UploadFile.objects.all()})
+
+def edit_context(request):
+    
+    return render(request, 'edit_context.html')
+
+
+def json_data_view(request):
+    """Return the context.json file as a JSON response
+    """
+    with open(os.path.join("media", "uploads", "context.json")) as json_file:
+        data = json.load(json_file)
+    return JsonResponse(data)
+
 
 def index(request):
     return HttpResponse("Hello, this is a minimal Django server!")
