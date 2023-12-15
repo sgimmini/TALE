@@ -8,10 +8,11 @@ urlpatterns = [
     path('download_selected/', views.download_selected_files, name='download_selected_files'),
     path('file_process/', views.show_list_of_files2process, name='file_process'),
     path('_file_process/<int:file_id>/', views.process_file, name='_file_process'),
+    path('file_process/getContext/<int:file_id>/', views.getContext, name='getContext'),
     path('download_outputs/', views.download_all_outputs, name='download_all_outputs'),
     path('display_outputs/', views.display_output, name='display_outputs'),
     path('render_html_file/<str:output_folder>/', views.render_html_file, name='render_html_file'),
     path('render_html_file/<str:output_folder>/<str:image_name>/', views.serve_dynamic_image, name='serve_dynamic_image'),
     path('edit_context/', views.edit_context, name='edit_context'),
-    path('edit_context/json_data_view', views.json_data_view, name='json_data_view'),
+    path('file_process/json_data_view', views.json_data_view, name='json_data_view'),
 ]

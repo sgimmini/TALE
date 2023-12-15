@@ -1,0 +1,82 @@
+Lore:
+	- Das Setting des Spiels ist in Essen
+		○ Im Süden des Ruhrgebiets sind die besseren Städte / Domes
+		○ Norden ist eher billig
+		○ Unter der Erde gibt es viiiele alte Tunnel wegen des Bergbaus
+		○ Extrem hohe Bevölkerung
+			§ Großteils unter der Erde
+			§ Weniger über der Erde
+		○ Tunneleinstürze, Fluten und Gasausbrüche kommen häufig vor
+		○ Regenzeiten sind brutal gefährlich…
+		○ Zwischen Kuppeln wird man durch Tubes reisen (Vakuum-Züge)
+			§ Klasse 1 - 7
+		○   Es leben dort viele YiQiRen (Ais)
+		○ Es leben noch Ratten, Kakerlaken & iClone Tiere
+		○ Extrem viel Müll, da es eh keine Umwelt mehr gibt
+		○ Food kommt aus dem iClone Food Print
+			§ Pilze sind teuerer Luxus
+			§ Gemüse 1x die Woche in der Oberschicht
+		○ Ornithoper Zugang ist über einen recht tiefen Abluftschacht geregelt
+
+	- Chrom wohnt in einem Camping-Wagen
+		○ Schläft mit VR-Brille und verschmorten Haaren dort
+	- Eine Bikerin namens Adelle sucht ihre Schwester Nugget (12 Jahre alt)
+		○ Hat die Biker Gang "Snakes on Wheels" dabei
+	- Chrom findet Nuggets auf den Kameras, sie ist gestern mit anderen Kindern aus dem Trailerpark gegangen
+		○ Sie kam jedoch nicht wieder zurück…
+		○ Normalerweise gehen Kids nachts ins Ruhrtal, um dort Müll zu sammeln
+	- Adelle macht eine Ansage:
+		○ Wer Nugget organisiert kriegt ihr Bike
+		○ Alle Leute stürmen los
+	- Chrom hat eine Idee
+		○ Er möchte einen Ortungschip an die Drohne eines Typen machen
+	- Er schrottet das Fluttor, welches nun offen ist, aber nicht mehr geschlossen werden kann
+	- Alle gehen suchen
+	- Es zieht ein krasser Sturm auf
+	- Er sucht nach Nugget im Schrott
+	- Sie scheint auf ein iClone Vieh getroffen zu sein
+	- Sie ist in einer Höhle mit zwei Schrottwölfen
+
+
+	- DaSun (eine Marke an Bars von TempestTech) "Die Karibik" (eine Filiale von DaSun)
+	- Eagle Passant räuspert sich und spuckt etwas Schleim im hohen Bogen in eine Gasse; die Flüssigkeit ist tief schwarz von all dem Staub in seiner Lunge
+	- Es ist drückend heiß und die Stickigkeit kann einen fast in Ohnmacht fallen lassen
+	- Dunkle Gassen und Gänge wechseln sich ab mit flackernden Neonlichtern
+		○ Die Stickigkeit lässt keinen Geruch zu
+	- Sie schiebt eine Tür unter einem grellen Neonlicht auf. Die Buchstaben formen den Namen "Die Karibik: Eine DaSun experience brought to you by Tempest Tech"
+	- Ein Schritt in eine Schleuse, welche hausierer und UV-Diebe abhalten soll und nach kurzer Kontrolle schreitet sie in hinaus in die strahlende Sonne. Es weht ein steriler, versalzter Wind und sofort füllen das Rauschen von Wasser und das Gelächter von Menschen die Ohren
+	- Es erstreckt sich über eine lange Strecke hinweg weißer Sandstrand und azurfarbenenes Wasser
+		○ Ein paar Kinder spielen Ball und ein paar iClone-WaterDweller kreisen nahe der Decke
+	- Einige dutzende Barinseln sind verteilt am Strand und viele der Gäste tummeln sich um diese herum
+	- Der Blick wird nur unterbrochen von einem hohen Zaun, welcher mitten durch den Raum gezogen wurde und welcher den höherklassigen Teil vom "Economy" Teil abgrenzt.
+	- Bei näherer  Betrachtung zu sehen ist das wasser kaum Knöcheltief
+		○ Trotzdem stehen alle paar Meter fette Schilder, welche garanteiren, dass Tempest Tech nicht für Ertrunkene Personen haften
+
+Eagle geht zur Karibik:
+	- Augusta ist in Stöckelschuhen dort unterwegs in Nonnen-Outfit
+		○ Samuel Sanchez Gonzalez ist neu im Team von MilPool gekommen
+		○ Er war vorher bei CrisisInvest
+		○ Eagle soll geheim für Augusta ein Rennen gegen den Typen fahren, weil die beiden Beef haben
+		○ Auf dem Weg zur Arbeit werden von ihnen offizielle Rennen gefahren
+	- BMW T5 (Tank Class)
+		○ Gonzalez fährt KMW-Stier
+	- Eagle und Augsta fahren morgens los…
+		○ Das Ding hat einfach Reifen und ist auch sonst unnötig benutzerfreundlich
+		○ Eagle und Augsta geraten in das Rennen mit dem stier
+		○ Wie bei einem Stierkampf färt Eagle um Gonzalez herum und lässt ihn gegen einen Pfeiler krachen
+
+In einer kleinen Gasse gibt es viele Kapsel-Hotels
+	- Elektrische Strahlung macht krank
+	- In der gegend gibt es viele Daten, welche fließen, da ein Knotenpunkt in der Nähe ist
+	- Bitwise wohnt selber in einer Kapsel
+	- Hat Neurallink-Klinen als Kopfhörer versteckt
+	- Bitwise ist eine Relativ ungepflegt und klein aussehende Person
+Bitwise Klinkt sich ein in die Matrix:
+	- Möchte zum Fog of War: Ein ort absoluter Annonymität
+	- Avatar ist Standard humanoider Avatar mit schwarzes Loch Material
+	- Im FOW wird es unruhig
+	- Angeblich sollen alle Ausgänge überwacht werden zurzeit
+	- Kis wollen reinkommen und kommen aber nicht rein
+	- Sie fordern, dass sie ja recht auf annonymität hätten
+	- Quasi eine demonstration
+	- Roter Stern und ID verhindern, dass sie jemals anonym sein könnten

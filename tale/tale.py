@@ -27,13 +27,18 @@ def runPipeline(file : str):
 
     # generate html file from the images
     postProc.process(indexedStory, id)
-    
+
+
 def runEntityExtraction(file : str):
     # create an instance of the class
     contextManager = ContextManager()
 
+    # read content of file
+    with open(file, 'r') as f:
+        content = f.read()
+    
     # get entities from the notes
-    entities = contextManager.get_entities(file)
+    entities = contextManager.get_entities(content)
 
     # write entities to context.json
     contextManager.write_entities(entities)

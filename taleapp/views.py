@@ -1,4 +1,4 @@
-from tale import runPipeline
+from tale.tale import runPipeline, runEntityExtraction
 import os
 from django.http import HttpResponse, JsonResponse
 import json
@@ -49,6 +49,16 @@ def show_list_of_files2process(request):
     uploaded_files = UploadFile.objects.all()
     context = {'uploaded_files': uploaded_files}
     return render(request, 'file_process.html', context)
+
+
+def getContext(request, file_id):
+    # Retrieve the selected file based on file_id
+    selected_file = UploadFile.objects.get(id=file_id)
+    
+    # run the entity extraction pipeline on uploaded file
+    runEntityExtraction(selected_file.file.path)
+    
+    return render(request, 'file_process.html')  # Display a success page or redirect elsewhere
 
 def process_file(request, file_id):
     # Retrieve the selected file based on file_id

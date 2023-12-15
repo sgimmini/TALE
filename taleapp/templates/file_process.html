@@ -18,6 +18,16 @@
         <button type="submit">Process</button>
     </form>
 
+
+    <body>
+        <h2>Edit the Context</h2>
+        <table id="dataTable">
+    
+        </table>
+    
+        // button to add new row
+        <button id="addRow">Add Row</button>
+
     <script>
         $(document).ready(function() {
             $('#processForm').on('submit', function(e) {
@@ -30,6 +40,66 @@
                 this.submit(); // Submit the form with the updated action
             });
         });
+
+    // add event listener to drop down menu if user selects a different file
+    document.getElementById('file_dropdown').addEventListener('change', function() {
+        var selectedFileId = $('#file_dropdown').val(); // Get the selected file ID
+        console.log(selectedFileId)
+    });
+
+    // on dom load log selectedField in dropdown
+    document.addEventListener('DOMContentLoaded', function() {            
+        var selectedFileId = $('#file_dropdown').val(); // Get the selected file ID
+        var formAction = "{% url 'getContext' file_id=0 %}".replace('0', selectedFileId);
+
+        // send ajax request to get json data
+        $.ajax({
+            url: formAction,
+            type: 'GET',
+            success: function(data) {
+                console.log(data);
+            }
+        });
+    });
+
+
+    // fetches data from json_data_view and populates the table
+    function populateTable(jsonData) {
+        var table = document.getElementById('dataTable');
+        for(const key in jsonData) {
+            var row = table.insertRow();
+            var cell1 = row.insertCell();
+            var cell2 = row.insertCell();
+            cell1.innerHTML = key;
+            cell2.innerHTML = jsonData[key];
+            // make cells editable
+            cell1.contentEditable = true;
+            cell2.contentEditable = true;
+
+        };
+    }
+
+    // add new row
+    function addRow() {
+        var table = document.getElementById('dataTable');
+        var row = table.insertRow();
+        var cell1 = row.insertCell();
+        var cell2 = row.insertCell();
+        cell1.innerHTML = "New Key";
+        cell2.innerHTML = "New Value";
+        // make cells editable
+        cell1.contentEditable = true;
+        cell2.contentEditable = true;
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        fetch('json_data_view')
+        .then(response=>response.json())
+        .then(jsonData=>populateTable(jsonData))
+        .catch(error=>console.log(error));
+    });
+
+
     </script>
 </body>
 </html>
