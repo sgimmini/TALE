@@ -13,7 +13,9 @@ class ContextManager:
         doc = self.nlp(text)
         entities = []
         for ent in doc.ents:
-            entities.append((ent.text, ent.label_))
+            if(ent.label_ == "PER"):
+                entities.append((ent.text, ent.label_))
+                print(ent.text, ent.label_)
         return entities
     
     # write entities to context.json
