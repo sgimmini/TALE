@@ -4,6 +4,12 @@ from openai import OpenAI
 from .pre_processor import PreProcessor
 from tqdm import tqdm
 
+def get_new_client():
+    """This function returns a new openai client"""
+    # get the openai api key
+    openai.api_key = os.getenv("OPENAI_API_KEY")
+    return OpenAI()
+
 
 class Summarizer:
     """This class contains functions to summarize notes into prompts"""
