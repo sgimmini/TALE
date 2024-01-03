@@ -84,6 +84,9 @@ class PreProcessor(BaseModel):
         if os.path.isfile(filepath):
             with open(filepath, "r", encoding="UTF-8") as json_file:
                 output = json.load(json_file)
+        elif filepath.endswith(".json"):
+            with open(filepath, "r", encoding="UTF-8") as json_file:
+                output = json.load(json_file)
         else:
             # if the filepth is a valid json string
             output = json.loads(filepath)
