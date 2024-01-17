@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>
+   TALE
+  </title>
+  <link href="styles.css" rel="stylesheet"/>
+  <style type="text/css">
+   /* Reset some default browser styles */
+html, body, h1, h2, p {
+  margin: 0;
+  padding: 0;
+}
+
+/* Apply a box-sizing rule */
+*, *:before, *:after {
+  box-sizing: border-box;
+}
+
+/* General styles */
+body {
+  font-family: 'Arial', sans-serif;
+  line-height: 1.6;
+  background-color: #f4f4f4;
+}
+
+/* Style for content blocks */
+.content-block {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  overflow: hidden; /* Hide the overflowed parts of the skewed background */
+}
+
+/* Skewed background images */
+.content-block::before {
+  content: '';
+  position: absolute;
+  top: -50%; left: -50%;
+  width: 200%; height: 200%;
+  background: url('path-to-your-image.jpg') no-repeat center center; /* Placeholder for your image path */
+  background-size: cover;
+  opacity: 0.7;
+  z-index: -1;
+}
+
+.content-block::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: inherit; /* Inherit the background from the parent */
+  filter: blur(1px);
+  z-index: 1; /* Ensure it's above the background but below the text */
+}
+
+
+/* Skew every odd block to the right */
+.content-block:nth-child(odd)::before {
+  transform: skewY(-10deg);
+  transform-origin: top left;
+}
+
+/* Skew every even block to the left */
+.content-block:nth-child(even)::before {
+  transform: skewY(10deg);
+  transform-origin: top right;
+}
+
+/* General styles for .text-content */
+.text-content {
+  position: relative; /* Keep it relative for layering */
+  color: #ffffff; /* White color for better contrast */
+  background: rgba(0, 0, 0, 0.6); /* Semi-transparent black background */
+  padding: 40px 20px; /* Adequate padding for readability */
+  margin: 0 auto; /* Center align the text content */
+  width: 100%; /* Make text content cover the full width */
+  max-width: 1600px; /* Set a maximum width for very wide screens */
+  border-radius: 10px; /* Smoothed corners for a modern look */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Subtle shadow for depth */
+  z-index: 2; /* Ensure it's above the background */
+  transform: translateY(50%); /* Vertically center in the parent */
+}
+
+/* Styling for headings and paragraphs */
+.text-content h1, .text-content h2 {
+  font-size: 2.5rem; /* Larger size for headings */
+  margin-bottom: 20px; /* Space below headings */
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Shadow for text */
+}
+
+.text-content p {
+  font-size: 1.2rem; /* Comfortable reading size for paragraphs */
+  line-height: 1.6; /* Adequate line height for readability */
+}
+
+/* Responsive design adjustments */
+@media (max-width: 768px) {
+  .text-content {
+      padding: 20px 15px; /* Less padding on smaller screens */
+      font-size: 1rem; /* Smaller font size for compact screens */
+  }
+
+  .text-content h1, .text-content h2 {
+      font-size: 1.8rem; /* Smaller headings on smaller screens */
+  }
+}
+  </style>
+ </head>
+ <body>
+  <!-- Placeholder for new content blocks -->
+ </body>
+</html>

@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>
+   TALE
+  </title>
+  <link href="styles.css" rel="stylesheet"/>
+  <style type="text/css">
+   /* Reset some default browser styles */
+html, body, h1, h2, p {
+  margin: 0;
+  padding: 0;
+}
+
+/* Apply a box-sizing rule */
+*, *:before, *:after {
+  box-sizing: border-box;
+}
+
+/* General styles */
+body {
+  font-family: 'Arial', sans-serif;
+  line-height: 1.6;
+  background-color: #f4f4f4;
+}
+
+/* Style for content blocks */
+.content-block {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  overflow: hidden; /* Hide the overflowed parts of the skewed background */
+}
+
+/* Skewed background images */
+.content-block::before {
+  content: '';
+  position: absolute;
+  top: -50%; left: -50%;
+  width: 200%; height: 200%;
+  background: url('path-to-your-image.jpg') no-repeat center center; /* Placeholder for your image path */
+  background-size: cover;
+  opacity: 0.7;
+  z-index: -1;
+}
+
+.content-block::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: inherit; /* Inherit the background from the parent */
+  filter: blur(1px);
+  z-index: 1; /* Ensure it's above the background but below the text */
+}
+
+
+/* Skew every odd block to the right */
+.content-block:nth-child(odd)::before {
+  transform: skewY(-10deg);
+  transform-origin: top left;
+}
+
+/* Skew every even block to the left */
+.content-block:nth-child(even)::before {
+  transform: skewY(10deg);
+  transform-origin: top right;
+}
+
+/* General styles for .text-content */
+.text-content {
+  position: relative; /* Keep it relative for layering */
+  color: #ffffff; /* White color for better contrast */
+  background: rgba(0, 0, 0, 0.6); /* Semi-transparent black background */
+  padding: 40px 20px; /* Adequate padding for readability */
+  margin: 0 auto; /* Center align the text content */
+  width: 100%; /* Make text content cover the full width */
+  max-width: 1600px; /* Set a maximum width for very wide screens */
+  border-radius: 10px; /* Smoothed corners for a modern look */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Subtle shadow for depth */
+  z-index: 2; /* Ensure it's above the background */
+  transform: translateY(50%); /* Vertically center in the parent */
+}
+
+/* Styling for headings and paragraphs */
+.text-content h1, .text-content h2 {
+  font-size: 2.5rem; /* Larger size for headings */
+  margin-bottom: 20px; /* Space below headings */
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Shadow for text */
+}
+
+.text-content p {
+  font-size: 1.2rem; /* Comfortable reading size for paragraphs */
+  line-height: 1.6; /* Adequate line height for readability */
+}
+
+/* Responsive design adjustments */
+@media (max-width: 768px) {
+  .text-content {
+      padding: 20px 15px; /* Less padding on smaller screens */
+      font-size: 1rem; /* Smaller font size for compact screens */
+  }
+
+  .text-content h1, .text-content h2 {
+      font-size: 1.8rem; /* Smaller headings on smaller screens */
+  }
+}
+  </style>
+ </head>
+ <body>
+  <!-- Placeholder for new content blocks -->
+  <div class="content-block skew-left" id="block0" style="background: url('2.png') no-repeat center center;
+                background-size: cover;">
+   <div class="text-content">
+    <h2>
+    </h2>
+    <p>
+     In the year 2050, the Tower of Babylon stood tall in the desert of Dubai, a monstrous mega-structure that symbolized the connection between the past and the present. This architectural marvel combined historical elements with 21st-century technology, housing both experimental labs and ancient temples. However, the purpose of the tower remained a mystery, shrouded in secrets.
+
+Our story begins in a seminar room where Pierre, Lara, and Blaze anxiously await the start of a psychological experiment. Elara and Blaze fidget with a spinner while they observe the adjacent ultra-modern laboratory, filled with computers and lasers.
+    </p>
+   </div>
+  </div>
+  <div class="content-block skew-right" id="block1" style="background: url('3.png') no-repeat center center;
+                background-size: cover;">
+   <div class="text-content">
+    <h2>
+    </h2>
+    <p>
+     As the experiment commences, the trio finds themselves in a meditative state, electrodes attached to their heads. They gather around a hologram of a brain, delving into the depths of their subconscious minds.
+    </p>
+   </div>
+  </div>
+  <div class="content-block skew-left" id="block2" style="background: url('4.png') no-repeat center center;
+                background-size: cover;">
+   <div class="text-content">
+    <h2>
+    </h2>
+    <p>
+     Suddenly, they are plunged into darkness, falling through a dark shaft towards a foreboding figure - the Grim Reaper. Standing before an obsidian gate adorned with mystical symbols, the trio realizes they have entered a realm of magic and mystery.
+    </p>
+   </div>
+  </div>
+  <div class="content-block skew-right" id="block3" style="background: url('5.png') no-repeat center center;
+                background-size: cover;">
+   <div class="text-content">
+    <h2>
+    </h2>
+    <p>
+     After this unsettling encounter, Pierre, Lara, and Blaze decide to distract themselves with a trip to the supermarket. Little do they know, they are being secretly followed by spirits of the dead, lurking in the aisles.
+
+Seeking a break from their otherworldly experiences, the trio decides to throw a party in their apartment. The theme? The 2010s, a nostalgic nod to the past. They dress up as people from that era, blurring the lines between the present and the past.
+    </p>
+   </div>
+  </div>
+  <div class="content-block skew-left" id="block4" style="background: url('1.png') no-repeat center center;
+                background-size: cover;">
+   <div class="text-content">
+    <h2>
+    </h2>
+    <p>
+     In search of answers, Blaze takes to the skies, gliding between the towers of the desert. Wearing a gliding suit, they navigate the vast expanse, hoping to uncover the secrets that lie within the Tower of Babylon.
+
+Driven by curiosity, Pierre, Lara, Blaze, and Astro Schmitt embark on a daring adventure. They board a makeshift UFO, cobbled together from a bathtub and various pipes and hoses. With their unconventional vessel, they set off into the unknown.
+
+Their journey takes them to the edge of a black hole, where Blaze fearlessly skates on the precipice. The sheer thrill and danger of the moment encapsulate the essence of their quest - a desire to explore the uncharted territories of the universe.
+
+As their adventures unfold, the mysteries of the Tower of Babylon slowly unravel. Each scene brings them closer to understanding the purpose of this enigmatic structure and the secrets it holds. With every step, they delve deeper into a world where past and future intertwine, where ancient rituals meet cutting-edge technology. 
+
+And so, the tale of Pierre, Lara, Blaze, and Astro Schmitt continues, as they navigate the realms of magic, mystery, and the unknown. With each new scene, they inch closer to unraveling the truth behind the Tower of Babylon and the connection between the past and the present.
+    </p>
+   </div>
+  </div>
+ </body>
+</html>
